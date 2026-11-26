@@ -1,0 +1,209 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE_NAME } from '../../lib/site';
+import { evaluate, rowsHtml, chartHtml, checksHtml, headlineHtml, statsHtml, PRESETS, LAST_CHECKED } from '../../lib/planner';
+
+// The page is built with the classic itinerary; the script re-renders from the same functions after every edit.
+const DEFAULT = 'classic';
+const ev = evaluate(PRESETS[DEFAULT].plan);
+const SOURCES = [
+  ['CDC Yellow Book 2026: High-Altitude Travel and Altitude Illness (Hackett and Shlim)', 'https://www.cdc.gov/yellow-book/hcp/environmental-hazards-risks/high-altitude-travel-and-altitude-illness.html'],
+  ['Wilderness Medical Society guidelines on acute altitude illness, 2024 update (Luks et al.)', 'https://doi.org/10.1016/j.wem.2023.05.013'],
+  ['NaTHNaC TravelHealthPro (UK): Altitude illness', 'https://travelhealthpro.org.uk/disease/12/altitude-illness'],
+];
+---
+<Base title={`EBC acclimatization planner: check your pace | ${SITE_NAME}`} description="Plan your Everest Base Camp trek night by night and check the pace against CDC and Wilderness Medical Society altitude guidelines, rest days included.">
+<style is:global>
+  .pl-presets { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; padding: 16px 20px; margin-bottom: 20px; }
+  .pl-editor { container: pl / inline-size; }
+  .pl-rows { list-style: none; margin: 0; padding: 0; }
+  .pl-row { display: grid; grid-template-columns: 44px minmax(0, 1.1fr) minmax(0, 1fr) 76px auto; gap: 8px 10px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line-soft); }
+  .pl-row:last-child { border-bottom: 0; }
+  .pl-day { grid-column: 1; grid-row: 1; font-weight: 800; font-size: 17px; }
+  .pl-row.is-warn .pl-day { color: var(--accent-dark); }
+  .pl-stop { grid-column: 2; grid-row: 1; min-width: 0; }
+  .pl-hike { grid-column: 3; grid-row: 1; min-width: 0; }
+  .pl-gain { grid-column: 4; grid-row: 1; text-align: right; font-weight: 700; font-size: 16px; }
+  .pl-gain-v.is-warn { color: var(--accent-dark); }
+  .pl-gain-v.is-down { color: var(--muted); font-weight: 600; }
+  .pl-acts { grid-column: 5; grid-row: 1; display: flex; gap: 6px; }
+  .pl-tags { grid-column: 2 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+  .pl-none { font-size: 14px; color: var(--muted); padding-left: 4px; }
+  .pl-sel { width: 100%; min-height: 44px; padding: 0 34px 0 12px; border: 1px solid var(--line); border-radius: 8px; background: #FFFFFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 L6 6.5 L11 1.5' fill='none' stroke='%230F2430' stroke-width='1.8'/%3E%3C/svg%3E") no-repeat right 12px center; -webkit-appearance: none; appearance: none; font: 500 15px/1.2 var(--sans); color: var(--ink); text-overflow: ellipsis; cursor: pointer; }
+  .pl-sel:hover { border-color: var(--ink); }
+  .pl-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; border: 1px solid var(--line); border-radius: 20px; background: var(--paper); color: var(--ink); cursor: pointer; }
+  .pl-icon:hover:not(:disabled) { border-color: var(--ink); color: var(--accent); }
+  .pl-icon:disabled { opacity: 0.35; cursor: default; }
+  .pl-tag { display: inline-block; padding: 3px 10px; border-radius: 999px; background: #EEF2F3; color: var(--muted-2); font: 600 13px/1.35 var(--sans); }
+  .pl-tag.is-warn { background: #FDE7DA; color: #9A3412; }
+  .pl-tag.is-rest { background: var(--tint); color: #155A66; }
+  @container pl (max-width: 600px) {
+    .pl-row { grid-template-columns: 34px minmax(0, 1fr) auto; }
+    .pl-stop, .pl-hike, .pl-gain, .pl-acts { grid-row: auto; }
+    .pl-stop, .pl-hike { grid-column: 2 / -1; }
+    .pl-none { display: none; }
+    .pl-gain { grid-column: 2; text-align: left; }
+    .pl-acts { grid-column: 3; }
+  }
+  .pl-panel { background: #0F2430; color: #E8EEF0; border-radius: 10px; padding: 26px 26px 24px; }
+  @media (max-width: 980px) { .pl-panel { order: -1; } }
+  .pl-presets [data-status]:empty { display: none; }
+  .pl-checks { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+  .pl-check { display: flex; gap: 12px; align-items: flex-start; }
+  .pl-check svg { flex: none; margin-top: 1px; }
+  .pl-check-t { font-weight: 700; font-size: 16px; line-height: 1.35; color: #FFFFFF; }
+  .pl-check.is-warn .pl-check-t { color: #F2894E; }
+  .pl-check.is-na .pl-check-t { color: #9FB3BC; }
+  .pl-check-d { margin: 3px 0 0; font-family: var(--serif); font-size: 15px; line-height: 1.5; color: #C9D6DB; }
+  .pl-src { margin-top: 3px; font-size: 12px; color: #8FA4AD; }
+</style>
+<div class="wrap" style="padding-top: 40px; padding-bottom: 72px; font-family: var(--sans)">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Tools</span><span aria-hidden="true">/</span><span>Acclimatization planner</span></nav>
+  <h1 class="h-display" style="margin: 18px 0 8px; font-size: clamp(34px, 4vw, 48px)">EBC acclimatization planner</h1>
+  <p style="margin: 0 0 28px; max-width: 760px; font-family: var(--serif); font-size: 19px; color: var(--muted)">Choose where you sleep each night and which day hikes you take. The planner checks the climb against altitude guidelines from the CDC and the Wilderness Medical Society, and shows which nights need a rest day. Start from a typical itinerary and change it.</p>
+
+  <div data-planner>
+    <div class="card pl-presets">
+      <div style="display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center">
+        <span style="font-weight: 700; font-size: 16px">Start from</span>
+        <div role="group" aria-label="Starting itinerary" style="display: flex; flex-wrap: wrap; gap: 6px">
+          {Object.entries(PRESETS).map(([k, p]) => <button type="button" class:list={['btn', { 'btn-dark': k === DEFAULT }]} data-preset={k} aria-pressed={k === DEFAULT ? 'true' : 'false'} style="font-size: 15px">{p.label}</button>)}
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px">
+        <span data-status class="meta" role="status"></span>
+        <button type="button" class="btn" data-copy style="font-size: 15px">Copy a link to this plan</button>
+      </div>
+    </div>
+
+    <div data-stats style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px" set:html={statsHtml(ev)} />
+
+    <div class="card" style="border-radius: 10px; padding: 20px 20px 14px; margin-bottom: 20px">
+      <div style="overflow-x: auto">
+        <svg data-chart viewBox="0 0 1000 320" role="img" aria-label="Sleeping altitude and day hikes for each day of the itinerary below" style="display: block; width: 100%; min-width: 720px; height: auto; font-family: var(--sans); font-variant-numeric: tabular-nums" set:html={chartHtml(ev)} />
+      </div>
+      <div class="meta" style="display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px">
+        <span><span aria-hidden="true" style="display: inline-block; width: 10px; height: 10px; border-radius: 5px; border: 2px solid #0F2430; vertical-align: -1px"></span> sleep altitude</span>
+        <span><span aria-hidden="true" style="display: inline-block; width: 10px; height: 10px; border-radius: 5px; background: #1C6E7D; vertical-align: -1px"></span> rest day on the way up</span>
+        <span><span aria-hidden="true" style="display: inline-block; width: 10px; height: 10px; border-radius: 5px; background: #C2410C; vertical-align: -1px"></span> night that needs a look</span>
+        <span><span aria-hidden="true" style="display: inline-block; width: 16px; border-top: 2px dashed #7A8A92; vertical-align: 3px"></span> day hike, back down to sleep</span>
+        <span><span aria-hidden="true" style="display: inline-block; width: 16px; border-top: 2px dashed #1C6E7D; vertical-align: 3px"></span> 3,000 m: above it, sleep at most 500 m higher each night</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+      <section class="card pl-editor" aria-labelledby="pl-it" style="flex: 999 1 600px; min-width: 0; border-radius: 10px; padding: 22px 24px 20px">
+        <h2 id="pl-it" style="margin: 0; font-weight: 800; font-size: 22px">Your itinerary</h2>
+        <p style="margin: 4px 0 6px; font-family: var(--serif); font-size: 16px; line-height: 1.5; color: var(--muted)">Pick where you sleep each night. The plus button adds another night at the same stop, a rest day if you are above 3,000 m; the cross removes the day. Day 0 is the flight from Kathmandu (1,400 m) to Lukla.</p>
+        <ol class="pl-rows" data-rows set:html={rowsHtml(ev)} />
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding-top: 14px; border-top: 1px solid var(--line-soft)">
+          <button type="button" class="btn" data-add style="font-size: 15px">Add a day at the end</button>
+          <span class="meta">Up to 24 days.</span>
+        </div>
+        <noscript><p class="meta" style="margin: 12px 0 0">The planner needs JavaScript to recalculate. The plan shown is the classic itinerary.</p></noscript>
+      </section>
+
+      <aside class="pl-panel" aria-labelledby="pl-pc" style="flex: 1 1 340px; min-width: 0">
+        <h2 id="pl-pc" style="margin: 0; font-size: 15px; font-weight: 600; color: #F2894E">Pace check</h2>
+        <div data-headline aria-live="polite" style="margin-top: 6px; font-weight: 800; font-size: 26px; line-height: 1.2; color: #FFFFFF">{headlineHtml(ev)}</div>
+        <ul class="pl-checks" data-checks set:html={checksHtml(ev)} />
+        <p style="margin: 20px 0 0; padding-top: 16px; border-top: 1px solid #2B4553; font-size: 14px; line-height: 1.5; color: #C9D6DB">Whatever the plan says, don't go higher with symptoms of altitude sickness, and go down if they get worse.</p>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 16px; font-weight: 700; font-size: 15px">
+          <a href="/altitude-acclimatization-for-trekking-10-golden-rules/" style="color: #F2894E">Read the 10 acclimatization rules</a>
+          <a href="/tools/elevation-profile/" style="color: #F2894E">See the classic route day by day</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <section style="margin-top: 44px; max-width: 760px">
+    <h2 style="margin: 0 0 10px; font-weight: 800; font-size: 22px">How the checks work</h2>
+    <p style="margin: 0 0 14px; font-family: var(--serif); font-size: 17px; line-height: 1.6; color: var(--muted)">Guidelines measure the pace by where you sleep. Day hikes up to a viewpoint are the usual way to spend a rest day, so the planner draws them on the chart, but every check uses your sleeping altitude only. A rest day here means a night above 3,000 m that is no higher than the night before.</p>
+    <p style="margin: 0 0 14px; font-family: var(--serif); font-size: 17px; line-height: 1.6; color: var(--muted)">Above 3,000 m, the advice is to sleep no more than 500 m higher each night. On the EBC trail that isn't always possible: the climb from Phakding or Monjo to Namche Bazaar is more than 500 m, and there is no village on the way up to break it. Where a bigger step can't be avoided, the guidelines ask for a rest day before or after it, which is why almost every itinerary spends two nights in Namche.</p>
+    <p style="margin: 0 0 14px; font-family: var(--serif); font-size: 17px; line-height: 1.6; color: var(--muted)">The planner doesn't know your walking speed, the weather or your health. It checks altitude only, so make sure each day's stage is one you can walk. How you coped with altitude before is the best guide to how you will cope again; if you have had altitude sickness, talk to a doctor before the trip.</p>
+    <ul class="meta" style="margin: 0; padding-left: 18px; line-height: 1.7">
+      {SOURCES.map(([t, u]) => <li><a href={u} rel="nofollow noopener" style="text-decoration: underline">{t}</a></li>)}
+    </ul>
+  </section>
+  <p class="meta" style="margin-top: 20px; max-width: 900px">Altitudes are rounded; published figures differ by 20–100 m. Kala Patthar: GPS-measured summit 5,644 m; often listed as 5,545 m. Guidelines last checked {LAST_CHECKED}. This is not medical advice.</p>
+</div>
+<script>
+  import { evaluate, rowsHtml, chartHtml, checksHtml, headlineHtml, statsHtml, PRESETS, encode, decode, tidy, MAX_DAYS, type PlanDay } from '../../lib/planner';
+
+  const root = document.querySelector<HTMLElement>('[data-planner]');
+  if (root) {
+    const $ = <T extends Element = HTMLElement>(s: string) => root.querySelector<T>(s)!;
+    const clone = (p: PlanDay[]) => p.map((d) => ({ ...d }));
+    const fromHash = () => {
+      const m = location.hash.match(/plan=([a-z.-]+)/);
+      return m ? decode(m[1]) : null;
+    };
+    let plan: PlanDay[] = clone(fromHash() ?? PRESETS.classic.plan);
+
+    const render = (focus?: string, save = false) => {
+      const ev = evaluate(plan);
+      $('[data-rows]').innerHTML = rowsHtml(ev);
+      $('[data-chart]').innerHTML = chartHtml(ev);
+      $('[data-stats]').innerHTML = statsHtml(ev);
+      $('[data-checks]').innerHTML = checksHtml(ev);
+      $('[data-headline]').textContent = headlineHtml(ev);
+      const code = encode(plan);
+      root.querySelectorAll<HTMLButtonElement>('[data-preset]').forEach((b) => {
+        const on = encode(PRESETS[b.dataset.preset!].plan) === code;
+        b.classList.toggle('btn-dark', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      $<HTMLButtonElement>('[data-add]').disabled = plan.length >= MAX_DAYS;
+      if (save) history.replaceState(null, '', `#plan=${code}`);
+      if (focus) root.querySelector<HTMLElement>(focus)?.focus();
+    };
+    const update = (focus?: string) => {
+      plan = tidy(plan);
+      render(focus, true);
+    };
+
+    root.addEventListener('change', (e) => {
+      const t = e.target as HTMLSelectElement;
+      if (!t.matches('select[data-k]')) return;
+      const i = Number(t.dataset.i);
+      if (t.dataset.k === 's') plan[i] = { s: t.value, h: plan[i].h };
+      else plan[i] = { s: plan[i].s, h: t.value };
+      update(`select[data-k="${t.dataset.k}"][data-i="${i}"]`);
+    });
+
+    root.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button');
+      if (!b || b.disabled || !root.contains(b)) return;
+      const i = Number(b.dataset.i);
+      if (b.dataset.act === 'stay') {
+        plan.splice(i + 1, 0, { s: plan[i].s, h: '' });
+        update(`[data-act="stay"][data-i="${i}"]`);
+      } else if (b.dataset.act === 'del') {
+        plan.splice(i, 1);
+        update(`[data-act="del"][data-i="${Math.min(i, plan.length - 1)}"]`);
+      } else if (b.hasAttribute('data-add')) {
+        plan.push({ s: plan[plan.length - 1].s, h: '' });
+        update('[data-add]');
+      } else if (b.dataset.preset) {
+        plan = clone(PRESETS[b.dataset.preset].plan);
+        update(`[data-preset="${b.dataset.preset}"]`);
+      } else if (b.hasAttribute('data-copy')) {
+        const code = encode(plan);
+        history.replaceState(null, '', `#plan=${code}`);
+        const url = `${location.origin}${location.pathname}#plan=${code}`;
+        const st = $('[data-status]');
+        const say = (t: string) => { st.textContent = t; window.setTimeout(() => { if (st.textContent === t) st.textContent = ''; }, 5000); };
+        if (navigator.clipboard?.writeText) navigator.clipboard.writeText(url).then(() => say('Link copied'), () => say('Copy the address from your browser bar'));
+        else say('Copy the address from your browser bar');
+      }
+    });
+
+    window.addEventListener('hashchange', () => {
+      const p = fromHash();
+      if (p) { plan = clone(p); render(); }
+    });
+
+    render();
+  }
+</script>
+</Base>
