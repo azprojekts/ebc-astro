@@ -9,7 +9,7 @@ export default defineConfig({
   build: { format: 'directory' },
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/tools/cost-calculator/') && !page.includes('/privacy/'),
+      filter: (page) => !page.includes('/search/'),
     }),
   ],
 });

@@ -1,6 +1,6 @@
-// Classic EBC itinerary. Altitudes rounded; published figures differ by 20–100 m — verify before launch.
-// Kala Patthar: the old site uses 5,545 m; many sources give ~5,644 m.
-export const LAST_CHECKED = '[DATE]';
+// Classic EBC itinerary; altitudes as most 2026 itineraries list them (published figures differ by 20–100 m).
+// Kala Patthar: GPS-measured summit 5,644.5 m (2006, 2008); often listed as 5,545 m, a lower point on the same ridge.
+export const LAST_CHECKED = '26 November 2026';
 
 export interface Day { short: string; title: string; sleep: number; rest?: boolean; note: string }
 
@@ -19,5 +19,5 @@ export const DAYS: Day[] = [
   { short: 'D11', title: 'Namche to Lukla', sleep: 2860, note: 'Last day on the trail. Fly out the next morning, weather permitting.' },
 ];
 
-export const PEAKS = { ebc: { day: 8, alt: 5364 }, kalaPatthar: { day: 9, alt: 5545 } };
+export const PEAKS = { ebc: { day: 8, alt: 5364 }, kalaPatthar: { day: 9, alt: 5644 } };
 export const fmt = (n: number) => n.toLocaleString('en-US');

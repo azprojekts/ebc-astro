@@ -60,7 +60,7 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: SI
       <a class="link-accent" href="/tools/elevation-profile/">Open the interactive profile</a>
     </div>
     <div style="overflow-x: auto">
-      <svg viewBox="0 0 1200 250" role="img" aria-label="Elevation profile from Lukla 2,860 m to Kala Patthar 5,545 m over nine days" style="display: block; width: 100%; min-width: 860px; height: auto; font-family: var(--sans); font-variant-numeric: tabular-nums">
+      <svg viewBox="0 0 1200 250" role="img" aria-label="Elevation profile from Lukla 2,860 m to Kala Patthar 5,644 m over nine days" style="display: block; width: 100%; min-width: 860px; height: auto; font-family: var(--sans); font-variant-numeric: tabular-nums">
         <g stroke="#E3E9EB">{[2400, 3400, 4400, 5400].map((a) => <line x1="40" x2="1160" y1={y(a)} y2={y(a)} />)}</g>
         <g fill="#7A8A92" font-size="11">{[2400, 3400, 4400, 5400].map((a) => <text x="1166" y={y(a) + 4}>{a.toLocaleString('en-US')}</text>)}</g>
         {ascent.filter((p) => p.rest).map((p) => <rect x={p.x - 62} y="20" width="124" height="180" fill="#1C6E7D" opacity="0.07" />)}

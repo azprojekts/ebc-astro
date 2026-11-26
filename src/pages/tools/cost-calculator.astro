@@ -1,17 +1,27 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { SITE_NAME } from '../../lib/site';
-// DEMO VALUES — verify every figure before launch (see project doc). Page is noindex and out of the sitemap until then.
+// Prices checked 26 Nov 2026 — sources are listed on the page. Update `checked` whenever a figure changes.
 const PRICES = {
-  checked: '[DATE]', npr: 135, permitsNpr: 3000 + 3000,
-  flight: { ktm: 238, ram: 188 }, room: { basic: 10, comfort: 25 }, guide: 30, porter: 22,
+  checked: '26 November 2026', npr: 151,
+  permitsNpr: 3390 + 3000, // Sagarmatha NP NPR 3,000 + 13% VAT; Khumbu Pasang Lhamu NPR 3,000 (since July 2024)
+  flight: { ktm: [238, 237], ram: [198, 199] }, // one way out, one way back (USD, incl. VAT)
+  room: { basic: 10, comfort: 25 }, guide: 30, porter: 22,
 };
+const SOURCES = [
+  ['Lukla flight fares 2026 (Kathmandu and Ramechhap sectors)', 'https://www.nepalcheapflights.com/flight-and-route-information/lukla-flight-booking-guide-2026-airfare-booking-process-trade-best-practices'],
+  ['Khumbu Pasang Lhamu entry fee raised to NPR 3,000 (Himal Press, July 2024)', 'https://en.himalpress.com/?p=65567'],
+  ['Sagarmatha National Park fee NPR 3,000 + 13% VAT', 'https://www.thelongestwayhome.com/travel-guides/nepal/permit-entry-fees-national-parks.html'],
+  ['Teahouse rooms and meal prices on the trail, 2026', 'https://www.thepricer.org/how-much-does-everest-base-camp-trek-cost/'],
+  ['Guide and porter day rates, 2026', 'https://himalayanhero.com/blog/everest-base-camp-trek-cost-guide/'],
+  ['Exchange rate (xe.com, 12 Nov 2026)', 'https://www.xe.com/currencycharts/?from=NPR&to=USD'],
+];
 const rows = [
   ['days', 'Days on the trail', 'Lukla to Lukla, incl. rest days'],
   ['food', 'Food & drinks per day', 'Three meals, tea, boiled water'],
 ];
 ---
-<Base title={`What will your EBC trek cost? | ${SITE_NAME}`} description="Calculator for the cost of the Everest Base Camp trek: permits, Lukla flights, teahouses, food, guide and porter." noindex>
+<Base title={`What will your EBC trek cost? | ${SITE_NAME}`} description="Calculator for the cost of the Everest Base Camp trek in 2026: permits, Lukla flights, teahouses, food, guide and porter, with sources.">
 <div class="wrap" style="padding-top: 40px; padding-bottom: 72px; font-family: var(--sans)">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Tools</span><span aria-hidden="true">/</span><span>Cost calculator</span></nav>
   <h1 class="h-display" style="margin: 18px 0 8px; font-size: clamp(34px, 4vw, 48px)">What will your EBC trek cost?</h1>
@@ -48,9 +58,16 @@ const rows = [
       <div style="font-size: 15px; color: #9FB3BC">per person, about <span data-out="perDay" class="num"></span> a day</div>
       <div data-out="bar" aria-hidden="true" style="display: flex; height: 14px; border-radius: 7px; overflow: hidden; margin: 22px 0 18px; background: #2B4553"></div>
       <div data-out="parts" style="display: flex; flex-direction: column; gap: 10px"></div>
-      <p style="margin: 22px 0 0; padding-top: 16px; border-top: 1px solid #2B4553; font-size: 13px; color: #9FB3BC; line-height: 1.55">Permits: Sagarmatha National Park NPR 3,000 + Khumbu Pasang Lhamu NPR 3,000. Exchange rate USD 1 = NPR {PRICES.npr}. Prices last checked {PRICES.checked}.</p>
+      <p style="margin: 22px 0 0; padding-top: 16px; border-top: 1px solid #2B4553; font-size: 13px; color: #9FB3BC; line-height: 1.55">Permits: Sagarmatha National Park NPR 3,390 (incl. VAT) + Khumbu Pasang Lhamu NPR 3,000. USD 1 = NPR {PRICES.npr}. Prices last checked {PRICES.checked}.</p>
     </div>
   </div>
+  <section style="margin-top: 40px; max-width: 760px">
+    <h2 style="margin: 0 0 10px; font-weight: 800; font-size: 22px">How the numbers are worked out</h2>
+    <p style="margin: 0 0 12px; font-family: var(--serif); font-size: 17px; line-height: 1.6; color: var(--muted)">Rooms are counted per night (days minus one), food, guide and porter per day. Guide and porter rates are what you pay them; tips are extra. Prices change with season and lodge, so treat the total as a planning figure, not a quote.</p>
+    <ul class="meta" style="margin: 0; padding-left: 18px; line-height: 1.7">
+      {SOURCES.map(([t, u]) => <li><a href={u} rel="nofollow noopener" style="text-decoration: underline">{t}</a></li>)}
+    </ul>
+  </section>
 </div>
 <script>
   const root = document.querySelector<HTMLElement>('[data-calc]');
@@ -64,7 +81,7 @@ const rows = [
     const draw = () => {
       const parts: [string, number][] = [
         ['Permits', P.permitsNpr / P.npr],
-        ['Flights (return)', 2 * P.flight[s.route]],
+        ['Flights (return)', P.flight[s.route][0] + P.flight[s.route][1]],
         ['Teahouse rooms', (s.days - 1) * P.room[s.room]],
         ['Food & drinks', s.days * s.food],
         ['Guide', s.guide ? s.days * P.guide : 0],
@@ -73,7 +90,7 @@ const rows = [
       const total = parts.reduce((a, [, v]) => a + v, 0);
       $('days').textContent = String(s.days);
       $('food').textContent = '$' + s.food;
-      $('flightNote').textContent = s.route === 'ktm' ? `Direct from Kathmandu, about $${P.flight.ktm} one way` : `In peak seasons. About $${P.flight.ram} one way, plus the drive to Ramechhap`;
+      $('flightNote').textContent = s.route === 'ktm' ? `Direct from Kathmandu, $${P.flight.ktm[0]} one way` : `In peak seasons. $${P.flight.ram[0]} one way, plus the drive to Ramechhap`;
       $('total').textContent = usd(total);
       $('perDay').textContent = usd(total / s.days);
       $('bar').innerHTML = parts.map(([, v], i) => `<div style="width:${(v / total) * 100}%;background:${colors[i]}"></div>`).join('');
