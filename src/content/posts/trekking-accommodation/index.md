@@ -1,6 +1,6 @@
 ---
 title: Trekking Accommodation
-description: Camping If you’re used to carrying your own gear in a backpack, you’ll be amazed at the apparent luxury of a trekking camp in Nepal. Although you’ll be…
+description: "Where you sleep on a trek in Nepal: camping with tents and a dining tent, trekking lodges, or staying in a Nepali home."
 pubDate: '2011-12-11'
 updatedDate: '2011-12-18'
 type: post

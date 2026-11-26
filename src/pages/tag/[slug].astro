@@ -1,10 +1,10 @@
 ---
 import Archive from '../../layouts/Archive.astro';
-import { allPosts, tags, inTag, SITE_NAME } from '../../lib/site';
+import { allPosts, tags, inTag, listDescription, SITE_NAME } from '../../lib/site';
 export async function getStaticPaths() {
   const posts = await allPosts();
   return tags.map((t) => ({ params: { slug: t.slug }, props: { tag: t, list: inTag(posts, t.slug) } }));
 }
 const { tag, list } = Astro.props;
 ---
-<Archive title={`${tag.name} | ${SITE_NAME}`} heading={tag.name} kicker="Tag" posts={list} />
+<Archive title={`${tag.name} | ${SITE_NAME}`} heading={tag.name} kicker="Tag" posts={list} description={listDescription(tag.name, list)} />

@@ -1,6 +1,6 @@
 ---
 title: Food for an Everest Base Camp Trek
-description: What food should you take with you when setting off on an Everest Base Camp Trek? When heading to Nepal, you should remember that it’s a completely…
+description: "What food to bring for an Everest Base Camp trek, and which everyday products are hard or impossible to find in the mountains of Nepal."
 pubDate: '2011-12-20'
 updatedDate: '2011-12-26'
 type: post

@@ -1,6 +1,6 @@
 ---
 title: Altitude acclimatization for trekking – 10 golden rules
-description: '1st acclimatization rule: increase altitude gradually 2nd acclimatization rule: consume lots of liquids 3rd acclimatization rule: avoid alcohol, smoking…'
+description: "Ten rules for acclimatizing on the Everest Base Camp trek: climb slowly, drink plenty, avoid alcohol, never trek alone, and descend if symptoms get worse."
 pubDate: '2012-05-26'
 updatedDate: '2014-09-30'
 type: post

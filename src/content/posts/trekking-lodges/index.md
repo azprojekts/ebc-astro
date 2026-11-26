@@ -1,6 +1,6 @@
 ---
 title: Trekking Lodges
-description: Trekking Lodges on popular Treks in Nepal Himalaya It is a bit pretentious to call some village establishments hotels, but the most common word in Nepali…
+description: "Trekking lodges in Nepal: what a lodge and a \"hotel\" mean in the hills, and what to expect from rooms and food on popular trails."
 pubDate: '2010-10-23'
 updatedDate: '2011-12-18'
 type: post

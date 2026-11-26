@@ -1,6 +1,6 @@
 ---
 title: Drinking water on an Everest Base Camp Trek
-description: Drinking water during a trek At the start of the trek, even though the altitude in the mountains is quite low – 1,600-2,000 metres (Annapurna Circuit…
+description: "How much to drink on an Everest Base Camp trek, why steady fluid intake helps acclimatization, and how trekkers get drinking water on the trail."
 pubDate: '2011-09-21'
 updatedDate: '2011-12-26'
 type: post

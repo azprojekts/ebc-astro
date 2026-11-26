@@ -1,6 +1,6 @@
 ---
 title: Best Pictures from Kala Patthar
-description: '#1. Best Pictures from Kala Patthar: view over Lhotse (8,516 m) from Kala Patthar (5,545 m)'
+description: "Six photos from Kala Patthar, taken on a Hasselblad 500C/M: Lhotse, the Khumbu Icefall, Gorak Shep and Pumori from the classic Everest viewpoint."
 pubDate: '2011-12-25'
 updatedDate: '2011-12-25'
 type: post

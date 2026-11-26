@@ -3,4 +3,5 @@ import Archive from '../layouts/Archive.astro';
 import { allPosts, SITE_NAME } from '../lib/site';
 const posts = await allPosts();
 ---
-<Archive title={`All articles | ${SITE_NAME}`} heading="All articles" kicker="Archive" intro="Everything on the site, newest first." posts={posts} />
+<Archive title={`All articles | ${SITE_NAME}`} heading="All articles" kicker="Archive" intro="Everything on the site, newest first." posts={posts}
+  description="Every article and photo gallery on Everest Base Camp Trek Guide, newest first: altitude, lodges, food and water, Lukla and pictures from the Khumbu." />

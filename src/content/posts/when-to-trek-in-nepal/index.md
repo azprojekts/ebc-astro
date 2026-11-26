@@ -1,6 +1,6 @@
 ---
 title: When to Trek in Nepal?
-description: Which is the best season for trekking in Nepal Himalaya? Treks can last from two days to a month or more, and the first consideration will be to choose a…
+description: "When to trek in Nepal: the trekking seasons, why October and November have the best weather, and how to balance weather against crowds."
 pubDate: '2010-10-21'
 updatedDate: '2011-12-18'
 type: post

@@ -1,6 +1,6 @@
 ---
 title: What kind of Trekking in Nepal?
-description: What kind of Trekking in Nepal do you prefer? There are numerous ways to structure a trek because of two major factors. Firstly, you can almost always…
+description: "The ways to trek in Nepal, from independent teahouse trekking to hiring porters and guides or joining a fully organized camping trek."
 pubDate: '2010-10-21'
 updatedDate: '2011-12-18'
 type: post

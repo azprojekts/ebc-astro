@@ -1,6 +1,6 @@
 ---
 title: Best Pictures of Mani Rimdu festival
-description: '#1. Best Pictures of Mani Rimdu festival in Tengboche Monastery: old Buddhist woman'
+description: "Photos from the Mani Rimdu festival at Tengboche Monastery: monks dancing in the courtyard and the Sherpa women who come to watch."
 pubDate: '2011-12-26'
 updatedDate: '2011-12-26'
 type: post

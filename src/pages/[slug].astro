@@ -2,7 +2,7 @@
 import Article from '../layouts/Article.astro';
 import Gallery from '../layouts/Gallery.astro';
 import Archive from '../layouts/Archive.astro';
-import { allPosts, categories, inCategory, HUB_INFO, SITE_NAME, type Post } from '../lib/site';
+import { allPosts, categories, inCategory, listDescription, HUB_INFO, SITE_NAME, type Post } from '../lib/site';
 
 export async function getStaticPaths() {
   const posts = await allPosts();
@@ -24,5 +24,6 @@ if (props.kind === 'category') hub = HUB_INFO[props.cat.slug];
 {props.kind === 'post' && (props.post as Post).data.layout === 'gallery' && <Gallery post={props.post} />}
 {props.kind === 'post' && (props.post as Post).data.layout === 'article' && <Article post={props.post} prev={props.older} next={props.newer} related={props.related} />}
 {props.kind === 'category' && (
-  <Archive title={`${props.cat.name} | ${SITE_NAME}`} heading={hub ? hub.title : props.cat.name} kicker={hub ? hub.nav : 'Category'} intro={hub?.blurb} posts={props.list} activeHub={hub ? props.cat.slug : undefined} />
+  <Archive title={`${props.cat.name} | ${SITE_NAME}`} heading={hub ? hub.title : props.cat.name} kicker={hub ? hub.nav : 'Category'} intro={hub?.blurb} posts={props.list} activeHub={hub ? props.cat.slug : undefined}
+    description={hub ? hub.description : listDescription(props.cat.name, props.list)} />
 )}

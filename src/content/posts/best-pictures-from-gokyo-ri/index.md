@@ -1,6 +1,6 @@
 ---
 title: Best Pictures from Gokyo Ri
-description: '#1. Best Pictures from Gokyo Ri: view over 3d Gokyo lake from Gokyo Ri (5,357 m)'
+description: "Photos from the summit of Gokyo Ri (5,357 m): the turquoise Gokyo lakes, sunrise from the top and the view towards Renjo La pass."
 pubDate: '2011-12-25'
 updatedDate: '2011-12-25'
 type: post

@@ -1,6 +1,6 @@
 ---
 title: How Long to Trek in Nepal?
-description: Trekking in Nepal Himalaya involves many days of walking. To experience the hill country, you should allow yourself at least two weeks. Unless you have a…
+description: "How long to trek in Nepal: what fits into one, two or three weeks in the Himalaya, plus time for Kathmandu, Pokhara and Chitwan."
 pubDate: '2010-10-21'
 updatedDate: '2011-12-18'
 type: post

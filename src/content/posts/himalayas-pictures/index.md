@@ -1,6 +1,6 @@
 ---
 title: Himalayas Pictures
-description: '#1. Himalayas Pictures: View to Makalu (8,463 m) from Everest summit #2. Himalayas Pictures: View to Gokyo Lakes from Gokyo Ri (5,483 m) #3. Himalayas…'
+description: "Himalayan photos from the Everest region: Makalu, Everest and the Khumbu Icefall, the Gokyo lakes and the climb over Cho La pass."
 pubDate: '2010-11-28'
 updatedDate: '2011-03-30'
 type: page

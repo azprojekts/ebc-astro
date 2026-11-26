@@ -1,6 +1,6 @@
 ---
 title: Everest trekking starts in Lukla
-description: Lukla – most important place in Nepal for trekkers As the starting point for one of Nepal’s most popular trekking routes, the Everest Base Camp trek, for…
+description: "Lukla (2,860 m) is where the Everest Base Camp trek begins. Notes on the Lukla flight, buying tickets in Kathmandu, baggage limits and airport fees."
 pubDate: '2010-10-12'
 updatedDate: '2011-12-18'
 type: post

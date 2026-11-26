@@ -1,104 +1,161 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { SITE_NAME } from '../../lib/site';
-import { DAYS, PEAKS, LAST_CHECKED, fmt } from '../../lib/route';
+import { DAYS, PLANS, LAST_CHECKED, fmt, type PlanId, type Day, type Hike } from '../../lib/route';
 
 const y = (a: number) => +(280 - (a - 2400) * 0.073529).toFixed(1);
-const days = DAYS.map((d, i) => {
-  const prev = i ? DAYS[i - 1].sleep : d.sleep;
-  const gain = d.sleep - prev;
-  const over = gain > 500 && Math.max(prev, d.sleep) > 3000;
+const X = (i: number) => 60 + i * 80;
+const planIds = Object.keys(PLANS) as PlanId[];
+const DEFAULT: PlanId = 'ebc';
+
+/** Days for one plan: base itinerary with the day 8 and 9 overrides applied. */
+function daysFor(plan: PlanId): (Day & { i: number })[] {
+  return DAYS.map((d, i) => ({ ...d, ...(i === 8 ? PLANS[plan].d8 : i === 9 ? PLANS[plan].d9 : {}), i }) as Day & { i: number });
+}
+function card(d: Day & { i: number }, prev?: Day) {
+  const gain = prev ? d.sleep - prev.sleep : 0;
+  const over = gain > 500 && Math.max(prev?.sleep ?? 0, d.sleep) > 3000;
+  const top = (d.hikes ?? []).reduce<Hike | undefined>((a, h) => (!a || h.alt > a.alt ? h : a), undefined);
   return {
-    ...d, i, x: 60 + i * 80, y: y(d.sleep), over,
-    label: `Day ${i}${d.rest ? ' (rest day)' : ''}`,
+    label: `Day ${d.i}${d.rest ? ' (rest day)' : ''}`, title: d.title, note: d.note, over,
     sleepTxt: `${fmt(d.sleep)} m`,
-    change: i === 0 ? '—' : `${gain > 0 ? '+' : gain < 0 ? '−' : '±'}${fmt(Math.abs(gain))} m`,
+    change: !prev ? '—' : `${gain > 0 ? '+' : gain < 0 ? '−' : '±'}${fmt(Math.abs(gain))} m`,
+    high: top ? `${top.name}, ${fmt(top.alt)} m` : '',
+    time: d.time ?? '',
   };
-});
-const path = days.map((d, i) => `${i ? 'L' : 'M'}${d.x},${d.y}`).join(' ');
-const total = PEAKS.kalaPatthar.alt - DAYS[0].sleep;
-const highest = DAYS.reduce((a, b) => (b.sleep > a.sleep ? b : a));
-const overCount = days.filter((d) => d.over).length;
-const sel = 2;
+}
+const plans = Object.fromEntries(planIds.map((p) => {
+  const ds = daysFor(p);
+  return [p, ds.map((d, i) => card(d, ds[i - 1]))];
+}));
+const base = daysFor(DEFAULT);
+const path = base.map((d, i) => `${i ? 'L' : 'M'}${X(i)},${y(d.sleep)}`).join(' ');
+const overCount = plans[DEFAULT].filter((c) => c.over).length;
+const sel = 8;
+
+// Day hikes (climb high, sleep low): acclimatization hikes always, day 8–9 summits per plan
+type Spike = { plan?: PlanId; x: number; from: number; to: number; label: string; color: string; anchor: 'start' | 'end' | 'middle'; dx: number };
+const spikes: Spike[] = [];
+for (const i of [3, 6]) for (const h of DAYS[i].hikes ?? []) spikes.push({ x: X(i), from: y(DAYS[i].sleep), to: y(h.alt), label: `${h.name} ${fmt(h.alt)}`, color: '#1C6E7D', anchor: 'middle', dx: 0 });
+for (const p of planIds) for (const i of [8, 9]) {
+  const ds = daysFor(p);
+  (ds[i].hikes ?? []).forEach((h, k, arr) => {
+    const off = arr.length > 1 ? (k ? 10 : -10) : 0;
+    const left = off < 0 || (i === 8 && arr.length === 1);
+    const label = h.name === 'Everest Base Camp' ? `EBC ${fmt(h.alt)}` : `${h.name} ${fmt(h.alt)}`;
+    spikes.push({ plan: p, x: X(i) + off, from: y(ds[i].sleep), to: y(h.alt), label, color: '#C2410C', anchor: left ? 'end' : 'start', dx: left ? -8 : 8 });
+  });
+}
 ---
-<Base title={`EBC elevation profile, day by day | ${SITE_NAME}`} description="Interactive elevation profile of the Everest Base Camp trek: sleeping altitude each night, rest days and where the climb is faster than altitude guidelines recommend.">
+<Base title={`EBC elevation profile, day by day | ${SITE_NAME}`} description="Interactive elevation profile of the Everest Base Camp trek: where you sleep each night, acclimatization hikes, and three ways to fit in EBC and Kala Patthar.">
+<style is:global>
+  [data-plan="ebc"] .p-kp, [data-plan="ebc"] .p-both,
+  [data-plan="kp"] .p-ebc, [data-plan="kp"] .p-both,
+  [data-plan="both"] .p-ebc, [data-plan="both"] .p-kp { display: none; }
+</style>
 <div class="wrap" style="padding-top: 40px; padding-bottom: 72px; font-family: var(--sans)">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Tools</span><span aria-hidden="true">/</span><span>Elevation profile</span></nav>
   <h1 class="h-display" style="margin: 18px 0 8px; font-size: clamp(34px, 4vw, 48px)">EBC elevation profile, day by day</h1>
-  <p style="margin: 0 0 28px; max-width: 720px; font-family: var(--serif); font-size: 19px; color: var(--muted)">Where you sleep each night on a classic 11-night route, and where the climb is faster than altitude guidelines recommend. Tap a day.</p>
+  <p style="margin: 0 0 28px; max-width: 720px; font-family: var(--serif); font-size: 19px; color: var(--muted)">Where you sleep each night on a classic 11-night route, how high the day hikes take you, and where the climb is faster than altitude guidelines recommend. Tap a day.</p>
 
   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px">
-    <div class="card" style="padding: 16px 20px"><div class="meta">Total climb</div><div class="num" style="font-weight: 800; font-size: 28px">+{fmt(total)} m</div><div class="meta">From Lukla to Kala Patthar</div></div>
-    <div class="card" style="padding: 16px 20px"><div class="meta">Highest night</div><div class="num" style="font-weight: 800; font-size: 28px">{fmt(highest.sleep)} m</div><div class="meta">Gorak Shep, day 8</div></div>
-    <div class="card" style="padding: 16px 20px"><div class="meta">Rest days</div><div class="num" style="font-weight: 800; font-size: 28px; color: var(--teal)">{DAYS.filter((d) => d.rest).length}</div><div class="meta">Namche and Dingboche</div></div>
+    <div class="card" style="padding: 16px 20px"><div class="meta">Highest point</div><div class="num" style="font-weight: 800; font-size: 28px">5,644 m</div><div class="meta">Kala Patthar</div></div>
+    <div class="card" style="padding: 16px 20px"><div class="meta">Highest night</div><div class="num" style="font-weight: 800; font-size: 28px">5,164 m</div><div class="meta">Gorak Shep, day 8</div></div>
+    <div class="card" style="padding: 16px 20px"><div class="meta">Rest days</div><div class="num" style="font-weight: 800; font-size: 28px; color: var(--teal)">2</div><div class="meta">Namche and Dingboche</div></div>
     <div class="card" style="padding: 16px 20px"><div class="meta">Days over +500 m</div><div class="num" style="font-weight: 800; font-size: 28px; color: var(--accent)">{overCount}</div><div class="meta">Sleep gain above guideline</div></div>
   </div>
 
-  <div data-elev data-days={JSON.stringify(days.map(({ label, title, sleepTxt, change, note, over }) => ({ label, title, sleepTxt, change, note, over })))} style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
-    <div class="card" style="flex: 999 1 640px; min-width: 0; border-radius: 10px; padding: 20px 20px 12px">
-      <div style="overflow-x: auto">
-        <svg viewBox="0 0 1000 320" role="img" aria-label="Sleeping altitude by day from Lukla to Kala Patthar and back" style="display: block; width: 100%; min-width: 720px; height: auto; font-family: var(--sans); font-variant-numeric: tabular-nums">
-          <rect data-sel x={days[sel].x - 40} y="22" width="80" height="262" fill="#0F2430" opacity="0.06" />
-          <g stroke="#E3E9EB">{[2400, 3400, 4400, 5400].map((a) => <line x1="40" x2="960" y1={y(a)} y2={y(a)} />)}</g>
-          <g fill="#7A8A92" font-size="11">{[2400, 3400, 4400, 5400].map((a) => <text x="36" y={y(a) + 4} text-anchor="end">{fmt(a)}</text>)}</g>
-          <line x1="40" y1={y(3000)} x2="960" y2={y(3000)} stroke="#1C6E7D" stroke-dasharray="5 5" />
-          <text x="956" y={y(3000) - 6} text-anchor="end" font-size="11" fill="#1C6E7D">Above 3,000 m: sleep at most 500 m higher each day</text>
-          <path d={path} fill="none" stroke="#0F2430" stroke-width="2.5" stroke-linejoin="round" />
-          <path d={`M700,${y(5164)} L700,${y(PEAKS.ebc.alt)} M780,${y(4371)} L780,${y(PEAKS.kalaPatthar.alt)}`} stroke="#C2410C" stroke-width="1.5" stroke-dasharray="3 3" />
-          <circle cx="700" cy={y(PEAKS.ebc.alt)} r="5" fill="#C2410C" /><circle cx="780" cy={y(PEAKS.kalaPatthar.alt)} r="5" fill="#C2410C" />
-          <text x="692" y={y(PEAKS.ebc.alt) - 10} font-size="11" fill="#C2410C" text-anchor="end">EBC {fmt(PEAKS.ebc.alt)}</text>
-          <text x="788" y={y(PEAKS.kalaPatthar.alt) - 5} font-size="11" fill="#C2410C">Kala Patthar {fmt(PEAKS.kalaPatthar.alt)}</text>
-          {days.map((d) => (
-            <g>
-              <circle data-dot={d.i} cx={d.x} cy={d.y} r={d.i === sel ? 8 : 6} fill={d.over ? '#C2410C' : d.rest ? '#1C6E7D' : '#FFFFFF'} stroke="#0F2430" stroke-width="2" />
-              <text x={d.x} y="304" font-size="11" fill="#4A5A63" text-anchor="middle">{d.short}</text>
-            </g>
-          ))}
-        </svg>
+  <div data-elev data-plan={DEFAULT} data-plans={JSON.stringify(plans)} data-summaries={JSON.stringify(Object.fromEntries(planIds.map((p) => [p, PLANS[p].summary])))}>
+    <div class="card" style="padding: 18px 20px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center">
+      <div style="flex: 1 1 300px; min-width: 0">
+        <div style="font-weight: 700; font-size: 17px">Days 8 and 9: Base Camp and Kala Patthar</div>
+        <p data-summary style="margin: 4px 0 0; font-family: var(--serif); font-size: 16px; line-height: 1.5; color: var(--muted)">{PLANS[DEFAULT].summary}</p>
       </div>
-      <div role="group" aria-label="Choose a day" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px">
-        {days.map((d) => <button type="button" class:list={['btn', { 'btn-dark': d.i === sel }]} data-day={d.i} aria-pressed={d.i === sel ? 'true' : 'false'} style="min-width: 52px; padding: 0 10px; font-size: 14px; font-weight: 600; justify-content: center">{d.short}</button>)}
-      </div>
-      <div class="meta" style="display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 14px">
-        <span><span aria-hidden="true" style="display: inline-block; width: 10px; height: 10px; border-radius: 5px; border: 2px solid #0F2430; vertical-align: -1px"></span> sleep altitude</span>
-        <span><span aria-hidden="true" style="display: inline-block; width: 10px; height: 10px; border-radius: 5px; background: #1C6E7D; vertical-align: -1px"></span> rest day</span>
-        <span><span aria-hidden="true" style="display: inline-block; width: 10px; height: 10px; border-radius: 5px; background: #C2410C; vertical-align: -1px"></span> sleep gain over +500 m</span>
+      <div role="group" aria-label="Plan for days 8 and 9" style="display: flex; flex-wrap: wrap; gap: 6px">
+        {planIds.map((p) => <button type="button" class:list={['btn', { 'btn-dark': p === DEFAULT }]} data-plan-btn={p} aria-pressed={p === DEFAULT ? 'true' : 'false'} style="font-size: 15px">{PLANS[p].label}</button>)}
       </div>
     </div>
-    <div aria-live="polite" style="flex: 1 1 300px; min-width: 0; background: #0F2430; color: #E8EEF0; border-radius: 10px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
-      <div data-f="label" style="font-size: 15px; font-weight: 600; color: #F2894E">{days[sel].label}</div>
-      <div data-f="title" style="font-weight: 800; font-size: 26px; line-height: 1.2; color: #FFFFFF">{days[sel].title}</div>
-      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
-        <div><div style="font-size: 13px; color: #9FB3BC">Sleep at</div><div data-f="sleepTxt" class="num" style="font-weight: 800; font-size: 24px; color: #FFFFFF">{days[sel].sleepTxt}</div></div>
-        <div><div style="font-size: 13px; color: #9FB3BC">Change</div><div data-f="change" class="num" style={`font-weight: 800; font-size: 24px; color: ${days[sel].over ? '#F2894E' : '#FFFFFF'}`}>{days[sel].change}</div></div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch">
+      <div class="card" style="flex: 999 1 640px; min-width: 0; border-radius: 10px; padding: 20px 20px 12px">
+        <div style="overflow-x: auto">
+          <svg viewBox="0 0 1000 320" role="img" aria-label="Sleeping altitude and day hikes by day from Lukla to Kala Patthar and back" style="display: block; width: 100%; min-width: 720px; height: auto; font-family: var(--sans); font-variant-numeric: tabular-nums">
+            <rect data-sel x={X(sel) - 40} y="22" width="80" height="262" fill="#0F2430" opacity="0.06" />
+            <g stroke="#E3E9EB">{[2400, 3400, 4400, 5400].map((a) => <line x1="40" x2="960" y1={y(a)} y2={y(a)} />)}</g>
+            <g fill="#7A8A92" font-size="11">{[2400, 3400, 4400, 5400].map((a) => <text x="36" y={y(a) + 4} text-anchor="end">{fmt(a)}</text>)}</g>
+            <line x1="40" y1={y(3000)} x2="960" y2={y(3000)} stroke="#1C6E7D" stroke-dasharray="5 5" />
+            <text x="956" y={y(3000) - 6} text-anchor="end" font-size="11" fill="#1C6E7D">Above 3,000 m: sleep at most 500 m higher each day</text>
+            <path d={path} fill="none" stroke="#0F2430" stroke-width="2.5" stroke-linejoin="round" />
+            {spikes.map((s) => (
+              <g class={s.plan ? `p-${s.plan}` : undefined}>
+                <path d={`M${s.x},${s.from} L${s.x},${s.to}`} stroke={s.color} stroke-width="1.5" stroke-dasharray="3 3" />
+                <circle cx={s.x} cy={s.to} r="5" fill={s.color} />
+                <text x={s.x + s.dx} y={s.to - (s.anchor === 'middle' ? 10 : 4)} font-size="11" fill={s.color} text-anchor={s.anchor}>{s.label}</text>
+              </g>
+            ))}
+            {plans[DEFAULT].map((c, i) => (
+              <g>
+                <circle data-dot={i} cx={X(i)} cy={y(base[i].sleep)} r={i === sel ? 8 : 6} fill={c.over ? '#C2410C' : base[i].rest ? '#1C6E7D' : '#FFFFFF'} stroke="#0F2430" stroke-width="2" />
+                <text x={X(i)} y="304" font-size="11" fill="#4A5A63" text-anchor="middle">{base[i].short}</text>
+              </g>
+            ))}
+          </svg>
+        </div>
+        <div role="group" aria-label="Choose a day" style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px">
+          {base.map((d, i) => <button type="button" class:list={['btn', { 'btn-dark': i === sel }]} data-day={i} aria-pressed={i === sel ? 'true' : 'false'} style="min-width: 52px; padding: 0 10px; font-size: 14px; font-weight: 600; justify-content: center">{d.short}</button>)}
+        </div>
+        <div class="meta" style="display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 14px">
+          <span><span aria-hidden="true" style="display: inline-block; width: 10px; height: 10px; border-radius: 5px; border: 2px solid #0F2430; vertical-align: -1px"></span> sleep altitude</span>
+          <span><span aria-hidden="true" style="display: inline-block; width: 10px; height: 10px; border-radius: 5px; background: #1C6E7D; vertical-align: -1px"></span> rest day, acclimatization hike</span>
+          <span><span aria-hidden="true" style="display: inline-block; width: 10px; height: 10px; border-radius: 5px; background: #C2410C; vertical-align: -1px"></span> sleep gain over +500 m, EBC and Kala Patthar</span>
+          <span><span aria-hidden="true" style="display: inline-block; width: 16px; border-top: 2px dashed #7A8A92; vertical-align: 3px"></span> day hike, back down to sleep</span>
+        </div>
       </div>
-      <p data-f="note" style="margin: 0; font-family: var(--serif); font-size: 17px; line-height: 1.55; color: #C9D6DB">{days[sel].note}</p>
-      <a href="/altitude-acclimatization-for-trekking-10-golden-rules/" style="margin-top: auto; font-weight: 700; font-size: 15px; color: #F2894E">Read the 10 acclimatization rules</a>
+      <div aria-live="polite" style="flex: 1 1 300px; min-width: 0; background: #0F2430; color: #E8EEF0; border-radius: 10px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+        <div data-f="label" style="font-size: 15px; font-weight: 600; color: #F2894E">{plans[DEFAULT][sel].label}</div>
+        <div data-f="title" style="font-weight: 800; font-size: 26px; line-height: 1.2; color: #FFFFFF">{plans[DEFAULT][sel].title}</div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+          <div><div style="font-size: 13px; color: #9FB3BC">Sleep at</div><div data-f="sleepTxt" class="num" style="font-weight: 800; font-size: 24px; color: #FFFFFF">{plans[DEFAULT][sel].sleepTxt}</div></div>
+          <div><div style="font-size: 13px; color: #9FB3BC">Change</div><div data-f="change" class="num" style={`font-weight: 800; font-size: 24px; color: ${plans[DEFAULT][sel].over ? '#F2894E' : '#FFFFFF'}`}>{plans[DEFAULT][sel].change}</div></div>
+          <div data-wrap="high"><div style="font-size: 13px; color: #9FB3BC">Highest point today</div><div data-f="high" class="num" style="font-weight: 700; font-size: 16px; color: #FFFFFF">{plans[DEFAULT][sel].high}</div></div>
+          <div data-wrap="time"><div style="font-size: 13px; color: #9FB3BC">Walking time</div><div data-f="time" class="num" style="font-weight: 700; font-size: 16px; color: #FFFFFF">{plans[DEFAULT][sel].time}</div></div>
+        </div>
+        <p data-f="note" style="margin: 0; font-family: var(--serif); font-size: 17px; line-height: 1.55; color: #C9D6DB">{plans[DEFAULT][sel].note}</p>
+        <a href="/altitude-acclimatization-for-trekking-10-golden-rules/" style="margin-top: auto; font-weight: 700; font-size: 15px; color: #F2894E">Read the 10 acclimatization rules</a>
+      </div>
     </div>
   </div>
-  <p class="meta" style="margin-top: 20px">Altitudes are rounded; published figures differ by 20–100 m. Kala Patthar: GPS-measured summit 5,644 m; often listed as 5,545 m. Guideline: CDC Yellow Book 2026. Last checked {LAST_CHECKED}. This is not medical advice.</p>
+  <p class="meta" style="margin-top: 20px; max-width: 900px">Altitudes are rounded; published figures differ by 20–100 m. Kala Patthar: GPS-measured summit 5,644 m; often listed as 5,545 m. Walking times are typical ranges from published itineraries and vary with fitness and weather. Guideline: CDC Yellow Book 2026. Last checked {LAST_CHECKED}. This is not medical advice.</p>
 </div>
 <script>
   const root = document.querySelector<HTMLElement>('[data-elev]');
   if (root) {
-    const data = JSON.parse(root.dataset.days || '[]');
+    const plans = JSON.parse(root.dataset.plans || '{}');
+    const summaries = JSON.parse(root.dataset.summaries || '{}');
+    let plan = root.dataset.plan || 'ebc';
+    let day = 8;
     const rect = root.querySelector<SVGRectElement>('[data-sel]');
-    const pick = (i: number) => {
-      root.querySelectorAll<HTMLButtonElement>('[data-day]').forEach((b) => {
-        const on = Number(b.dataset.day) === i;
-        b.classList.toggle('btn-dark', on);
-        b.setAttribute('aria-pressed', String(on));
-      });
-      root.querySelectorAll<SVGCircleElement>('[data-dot]').forEach((c) => c.setAttribute('r', Number(c.dataset.dot) === i ? '8' : '6'));
-      rect?.setAttribute('x', String(60 + i * 80 - 40));
-      for (const k of ['label', 'title', 'sleepTxt', 'change', 'note']) {
+    const render = () => {
+      const c = plans[plan][day];
+      root.dataset.plan = plan;
+      root.querySelector<HTMLElement>('[data-summary]')!.textContent = summaries[plan];
+      root.querySelectorAll<HTMLButtonElement>('[data-plan-btn]').forEach((b) => { const on = b.dataset.planBtn === plan; b.classList.toggle('btn-dark', on); b.setAttribute('aria-pressed', String(on)); });
+      root.querySelectorAll<HTMLButtonElement>('[data-day]').forEach((b) => { const on = Number(b.dataset.day) === day; b.classList.toggle('btn-dark', on); b.setAttribute('aria-pressed', String(on)); });
+      root.querySelectorAll<SVGCircleElement>('[data-dot]').forEach((d) => d.setAttribute('r', Number(d.dataset.dot) === day ? '8' : '6'));
+      rect?.setAttribute('x', String(60 + day * 80 - 40));
+      for (const k of ['label', 'title', 'sleepTxt', 'change', 'note', 'high', 'time']) {
         const el = root.querySelector<HTMLElement>(`[data-f="${k}"]`);
-        if (el) el.textContent = data[i][k];
+        if (el) el.textContent = c[k];
       }
-      const ch = root.querySelector<HTMLElement>('[data-f="change"]');
-      if (ch) ch.style.color = data[i].over ? '#F2894E' : '#FFFFFF';
+      for (const k of ['high', 'time']) {
+        const w = root.querySelector<HTMLElement>(`[data-wrap="${k}"]`);
+        if (w) w.style.visibility = c[k] ? 'visible' : 'hidden';
+      }
+      root.querySelector<HTMLElement>('[data-f="change"]')!.style.color = c.over ? '#F2894E' : '#FFFFFF';
     };
-    root.querySelectorAll<HTMLButtonElement>('[data-day]').forEach((b) => b.addEventListener('click', () => pick(Number(b.dataset.day))));
+    root.querySelectorAll<HTMLButtonElement>('[data-day]').forEach((b) => b.addEventListener('click', () => { day = Number(b.dataset.day); render(); }));
+    root.querySelectorAll<HTMLButtonElement>('[data-plan-btn]').forEach((b) => b.addEventListener('click', () => { plan = b.dataset.planBtn!; if (day < 8 || day > 9) day = 8; render(); }));
+    render();
   }
 </script>
 </Base>

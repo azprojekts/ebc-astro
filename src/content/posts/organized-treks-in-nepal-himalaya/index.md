@@ -1,6 +1,6 @@
 ---
 title: Organized Treks in Nepal Himalaya
-description: Organized treks in Nepal When Jimmy Roberts organized the first trek in Nepal, independent trekking was a logistical nightmare – no lodges, email, fax or…
+description: "Organized treks in Nepal: how group and agency treks work, from camping treks booked abroad to arranging a trek in Kathmandu or Pokhara."
 pubDate: '2010-10-21'
 updatedDate: '2011-12-18'
 type: post

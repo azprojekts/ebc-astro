@@ -1,6 +1,6 @@
 ---
 title: Eating during an Everest Base Camp Trek
-description: Eating while trekking in the Nepalese Himalayas When planning a trekking route in the Nepalese Himalayas, it is important to know how you can get a…
+description: "How eating works on the Everest Base Camp trek: regular meals in teahouses and lodges, and how to eat for what your body needs at altitude."
 pubDate: '2012-05-23'
 updatedDate: '2012-06-27'
 type: post

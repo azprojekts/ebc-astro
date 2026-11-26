@@ -1,6 +1,6 @@
 ---
 title: Internet at Everest Base Camp
-description: Internet and 3G mobile phone coverage at Everest Base Camp Mobile communications are now available to the mountain climbers in the highest mountain of the…
+description: "Mobile internet at Everest Base Camp: the 2010 launch of 3G coverage on the Everest trail by Ncell, as reported at the time."
 pubDate: '2010-11-09'
 updatedDate: '2011-12-18'
 type: post

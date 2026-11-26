@@ -1,6 +1,6 @@
 ---
 title: Foods to be enjoyed on an Everest Base Camp trek
-description: What is definitely worth tasting on the Everest Base Camp Trek? At some point during the Everest trek and during your time in Nepal, I definitely…
+description: "Nepali food worth trying on the Everest Base Camp trek, from dal bhat eaten by hand to the garlic soup that guides recommend at altitude."
 pubDate: '2012-05-25'
 updatedDate: '2014-09-30'
 type: post

@@ -1,6 +1,6 @@
 ---
 title: High Altitude Sickness
-description: What is High Altitude Sickness Forms of High Altitude Sickness High Altitude Sickness Symptoms High Altitude Pulmonary Edema (HAPE) Symptoms High Altitude…
+description: "High altitude sickness on the Everest Base Camp trek: the forms (AMS, HAPE, HACE) and the warning signs of each."
 pubDate: '2010-10-29'
 updatedDate: '2011-12-18'
 type: post

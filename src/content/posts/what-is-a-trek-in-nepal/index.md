@@ -1,6 +1,6 @@
 ---
 title: What is a Trek in Nepal?
-description: What is a trek? A trek in Nepal is different from most other mountain walks or climbs. Few treks in Nepal offer a wilderness experience. Instead, you’ll…
+description: "What a trek in Nepal is really like: walking up and down hills through villages and farmland, with lodges on the main routes."
 pubDate: '2010-10-21'
 updatedDate: '2011-12-18'
 type: post

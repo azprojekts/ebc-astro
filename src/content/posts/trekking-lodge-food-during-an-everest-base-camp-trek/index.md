@@ -1,6 +1,6 @@
 ---
 title: Trekking lodge food during an Everest Base Camp trek
-description: 'Trekking lodge food: Breakfast When staying overnight at trekking lodges, we have an early breakfast at around 8:00-9:00 so that we can resume our trek by…'
+description: "A day of lodge food on the Everest Base Camp trek: tea pots and breakfast, what to order for lunch, and dinner in the teahouse."
 pubDate: '2012-05-21'
 updatedDate: '2012-06-27'
 type: post
