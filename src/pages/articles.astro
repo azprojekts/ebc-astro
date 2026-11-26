@@ -1,0 +1,6 @@
+---
+import Archive from '../layouts/Archive.astro';
+import { allPosts, SITE_NAME } from '../lib/site';
+const posts = await allPosts();
+---
+<Archive title={`All articles | ${SITE_NAME}`} heading="All articles" kicker="Archive" intro="Everything on the site, newest first." posts={posts} />

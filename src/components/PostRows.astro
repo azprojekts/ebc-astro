@@ -1,0 +1,13 @@
+---
+import { postMeta, type Post } from '../lib/site';
+interface Props { posts: Post[] }
+const { posts } = Astro.props;
+---
+<div style="display: flex; flex-direction: column">
+  {posts.map((p) => (
+    <a href={`/${p.id}/`} style="display: flex; flex-wrap: wrap; gap: 4px 24px; align-items: baseline; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid var(--line)">
+      <span style="font-family: var(--sans); font-weight: 700; font-size: 21px; line-height: 1.3; flex: 1 1 360px">{p.data.title}</span>
+      <span class="meta">{postMeta(p)}</span>
+    </a>
+  ))}
+</div>

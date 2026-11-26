@@ -1,0 +1,12 @@
+---
+interface Props { kind: 'archived' | 'medical' | 'none'; year: number }
+const { kind, year } = Astro.props;
+---
+{kind !== 'none' && (
+  <div role="note" class:list={['notice', { medical: kind === 'medical' }]}>
+    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#C2410C" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7 V13 M12 16.5 V17"/></svg>
+    {kind === 'medical'
+      ? <span><strong>Written in {year}. Not medical advice.</strong> Medicines and doses in this article follow older guidance and may not match what doctors recommend today. Talk to a doctor or travel clinic before you take anything at altitude.</span>
+      : <span><strong>Written in {year}.</strong> Prices, airlines and rules may have changed since then. An updated version of this guide is on the way.</span>}
+  </div>
+)}

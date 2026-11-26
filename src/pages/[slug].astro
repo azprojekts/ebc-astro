@@ -1,0 +1,28 @@
+---
+import Article from '../layouts/Article.astro';
+import Gallery from '../layouts/Gallery.astro';
+import Archive from '../layouts/Archive.astro';
+import { allPosts, categories, inCategory, HUB_INFO, SITE_NAME, type Post } from '../lib/site';
+
+export async function getStaticPaths() {
+  const posts = await allPosts();
+  const postPaths = posts.map((post) => {
+    const idx = posts.indexOf(post);
+    const related = posts.filter((p) => p.id !== post.id && p.data.hub === post.data.hub && p.data.layout === 'article').slice(0, 3);
+    return { params: { slug: post.id }, props: { kind: 'post' as const, post, newer: posts[idx - 1], older: posts[idx + 1], related } };
+  });
+  const catPaths = categories.map((cat) => ({ params: { slug: cat.slug }, props: { kind: 'category' as const, cat, list: inCategory(posts, cat.slug) } }));
+  const clash = postPaths.find((p) => catPaths.some((c) => c.params.slug === p.params.slug));
+  if (clash) throw new Error(`URL clash: /${clash.params.slug}/`);
+  return [...postPaths, ...catPaths];
+}
+
+const props = Astro.props as any;
+let hub: (typeof HUB_INFO)[string] | undefined;
+if (props.kind === 'category') hub = HUB_INFO[props.cat.slug];
+---
+{props.kind === 'post' && (props.post as Post).data.layout === 'gallery' && <Gallery post={props.post} />}
+{props.kind === 'post' && (props.post as Post).data.layout === 'article' && <Article post={props.post} prev={props.older} next={props.newer} related={props.related} />}
+{props.kind === 'category' && (
+  <Archive title={`${props.cat.name} | ${SITE_NAME}`} heading={hub ? hub.title : props.cat.name} kicker={hub ? hub.nav : 'Category'} intro={hub?.blurb} posts={props.list} activeHub={hub ? props.cat.slug : undefined} />
+)}

@@ -1,0 +1,158 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PostRows from '../components/PostRows.astro';
+import { allPosts, inCategory, HUB_INFO, SITE_NAME } from '../lib/site';
+import { DAYS, PEAKS, LAST_CHECKED } from '../lib/route';
+import gorakShep from '../content/posts/internet-at-everest-base-camp/everest-gorak-shep.jpg';
+import gokyoLake from '../content/posts/best-pictures-from-gokyo-ri/from-gokyo-ri.jpg';
+import kalaPatthar1 from '../content/posts/best-pictures-from-kala-patthar/from-kala-patthar-1.jpg';
+import gokyoRi6 from '../content/posts/best-pictures-from-gokyo-ri/from-gokyo-ri-6.jpg';
+import lhotse from '../content/posts/best-pictures-from-kala-patthar/lhotse.jpg';
+import maniRimdu from '../content/posts/best-pictures-of-mani-rimdu-festival/Mani-Rimdu-5.jpg';
+import kalaPatthar2 from '../content/posts/best-pictures-from-kala-patthar/from-kala-patthar-2.jpg';
+
+const posts = await allPosts();
+const hubs = Object.entries(HUB_INFO).map(([slug, h]) => {
+  const n = inCategory(posts, slug).length;
+  const label = slug === 'everest-trekking-pictures' ? `${n} galleries` : slug === 'everest-base-camp-trek' ? 'Overview' : `${n} articles`;
+  return { slug, ...h, label };
+});
+const latest = posts.filter((p) => p.data.type === 'post').slice(0, 5);
+
+// Elevation strip geometry (viewBox 1200 × 250): ascent days 0–9, sleep altitudes + EBC + Kala Patthar
+const y = (a: number) => +(200 - ((a - 2400) / 3400) * 180).toFixed(1);
+const x = (d: number) => +(40 + d * 124.44).toFixed(1);
+const ascent = DAYS.slice(0, 9).map((d, i) => ({ x: x(i), y: y(d.sleep), name: d.title, rest: !!d.rest }));
+const line = [...ascent.map((p) => `${p.x},${p.y}`), `${x(8.5)},${y(PEAKS.ebc.alt)}`, `${x(9)},${y(PEAKS.kalaPatthar.alt)}`];
+const labels = [
+  { i: 0, t: 'Lukla', dy: -16 }, { i: 1, t: 'Phakding', dy: -15 }, { i: 2, t: 'Namche', dy: -15 },
+  { i: 4, t: 'Tengboche', dy: -15 }, { i: 5, t: 'Dingboche', dy: -15 }, { i: 7, t: 'Lobuche', dy: -15 },
+];
+const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE_NAME, url: 'https://everestbasecamptrekguide.com/' };
+---
+<Base title={SITE_NAME} description="All about Everest Base Camp trek in Nepal. How to prepare to Everest trek, trekking advices, routes, guides, porters, accomodation, air tickets. Learn more here!" jsonLd={website} image={gorakShep}>
+
+<section class="wrap" style="padding-top: 72px; padding-bottom: 56px; display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
+  <div style="flex: 1 1 460px; min-width: 0">
+    <div class="kicker">Field notes from the Khumbu</div>
+    <h1 class="h-display" style="margin: 18px 0 20px; font-size: clamp(40px, 5vw, 60px)">The Everest Base Camp trek, from someone who walked it</h1>
+    <p style="margin: 0 0 32px; font-size: 20px; color: var(--muted); max-width: 540px">First-hand notes on altitude, lodges, food, water and the flight to Lukla, written on the way to Kala Patthar, Gokyo Ri and Tengboche.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 12px">
+      <a class="btn btn-dark" href="#profile">Start with the route</a>
+      <a class="btn" href="/altitude-acclimatization-for-trekking-10-golden-rules/">10 acclimatization rules</a>
+    </div>
+  </div>
+  <div style="flex: 1 1 520px; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: 250px 210px; gap: 12px">
+    <Image src={gorakShep} alt="Teahouses at Gorak Shep below the Khumbu Icefall" widths={[620, 1240]} sizes="(min-width: 1100px) 600px, 100vw" loading="eager" fetchpriority="high" style="grid-column: span 2; width: 100%; height: 100%; object-fit: cover; border-radius: 6px" />
+    <Image src={gokyoLake} alt="Turquoise Gokyo lake seen from Gokyo Ri" width={600} style="width: 100%; height: 100%; object-fit: cover; border-radius: 6px" />
+    <Image src={kalaPatthar1} alt="Lodges on the moraine below Kala Patthar" width={600} style="width: 100%; height: 100%; object-fit: cover; border-radius: 6px" />
+  </div>
+</section>
+
+<section id="profile" style="background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line)">
+  <div class="wrap" style="padding-top: 48px; padding-bottom: 40px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px 32px; margin-bottom: 20px">
+      <div>
+        <h2 class="h-section">Lukla to Kala Patthar in one line</h2>
+        <p style="margin: 6px 0 0; color: var(--muted); font-size: 17px">A typical 9-day ascent. Sleep altitudes, with the two acclimatization days marked.</p>
+      </div>
+      <a class="link-accent" href="/tools/elevation-profile/">Open the interactive profile</a>
+    </div>
+    <div style="overflow-x: auto">
+      <svg viewBox="0 0 1200 250" role="img" aria-label="Elevation profile from Lukla 2,860 m to Kala Patthar 5,545 m over nine days" style="display: block; width: 100%; min-width: 860px; height: auto; font-family: var(--sans); font-variant-numeric: tabular-nums">
+        <g stroke="#E3E9EB">{[2400, 3400, 4400, 5400].map((a) => <line x1="40" x2="1160" y1={y(a)} y2={y(a)} />)}</g>
+        <g fill="#7A8A92" font-size="11">{[2400, 3400, 4400, 5400].map((a) => <text x="1166" y={y(a) + 4}>{a.toLocaleString('en-US')}</text>)}</g>
+        {ascent.filter((p) => p.rest).map((p) => <rect x={p.x - 62} y="20" width="124" height="180" fill="#1C6E7D" opacity="0.07" />)}
+        <path d={`M${line.join(' L')} L${x(9)},200 L40,200 Z`} fill="#0F2430" opacity="0.06" />
+        <path d={`M${line.join(' L')}`} fill="none" stroke="#0F2430" stroke-width="2.5" stroke-linejoin="round" />
+        {ascent.filter((p) => !p.rest).map((p) => <circle cx={p.x} cy={p.y} r="5" fill="#FFFFFF" stroke="#0F2430" stroke-width="2" />)}
+        <circle cx={x(8.5)} cy={y(PEAKS.ebc.alt)} r="6" fill="#C2410C" /><circle cx={x(9)} cy={y(PEAKS.kalaPatthar.alt)} r="6" fill="#C2410C" />
+        <g fill="#0F2430" font-size="12" font-weight="600">
+          {labels.map((l) => <text x={ascent[l.i].x} y={ascent[l.i].y + l.dy} text-anchor="middle">{l.t}</text>)}
+          <text x={x(8) - 18} y={y(5164) - 15} text-anchor="end">Gorak Shep</text>
+          <text x={x(8.5)} y={y(PEAKS.ebc.alt) - 17} text-anchor="middle" fill="#C2410C">EBC</text>
+          <text x={x(9) - 10} y={y(PEAKS.kalaPatthar.alt) - 13} text-anchor="end" fill="#C2410C">Kala Patthar</text>
+        </g>
+        <g fill="#4A5A63" font-size="11">{Array.from({ length: 10 }, (_, i) => <text x={x(i)} y="226" text-anchor="middle">D{i}</text>)}</g>
+        <g fill="#1C6E7D" font-size="11">{ascent.filter((p) => p.rest).map((p) => <text x={p.x} y="244" text-anchor="middle">rest day</text>)}</g>
+      </svg>
+    </div>
+    <div class="meta" style="margin-top: 10px">Altitudes in metres, rounded. Last checked {LAST_CHECKED}.</div>
+  </div>
+</section>
+
+<section class="wrap" style="padding-top: 72px; padding-bottom: 24px">
+  <h2 class="h-section" style="margin-bottom: 28px">Find your way around</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
+    {hubs.map((h) => (
+      <a class="card" href={`/${h.slug}/`} style="display: flex; flex-direction: column; gap: 10px; padding: 24px; min-height: 170px">
+        <span style="font-family: var(--sans); font-weight: 800; font-size: 22px; line-height: 1.15">{h.title}</span>
+        <span style="font-size: 16px; color: var(--muted); line-height: 1.5">{h.blurb}</span>
+        <span class="meta" style="margin-top: auto">{h.label}</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<section id="tools" class="wrap" style="margin-top: 48px">
+  <div style="background: var(--tint); border-radius: 10px; padding: 48px 40px">
+    <div class="kicker" style="color: var(--accent-dark)">Trek tools</div>
+    <h2 class="h-section" style="margin: 10px 0 8px; font-size: 34px">Plan your trek with real numbers</h2>
+    <p style="margin: 0 0 32px; color: var(--muted-2); font-size: 18px; max-width: 640px">Interactive charts and calculators. Every figure shows the date it was last checked.</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px">
+      <a class="card" href="/tools/elevation-profile/" style="display: flex; flex-direction: column; gap: 12px; padding: 24px; border-color: rgba(15,36,48,0.10)">
+        <svg width="120" height="44" viewBox="0 0 120 44" aria-hidden="true" fill="none" stroke="#C2410C" stroke-width="2" stroke-linejoin="round"><path d="M2 38 L18 41 L32 30 L46 30 L60 25 L74 18 L88 18 L102 11 L118 4"/></svg>
+        <span style="font-family: var(--sans); font-weight: 800; font-size: 21px">Elevation profile</span>
+        <span style="font-size: 16px; color: var(--muted); line-height: 1.5">Day by day: altitude gain, sleep height and rest days.</span>
+      </a>
+      <a class="card" href="/tools/cost-calculator/" style="display: flex; flex-direction: column; gap: 12px; padding: 24px; border-color: rgba(15,36,48,0.10)">
+        <svg width="120" height="44" viewBox="0 0 120 44" aria-hidden="true" fill="none" stroke="#C2410C" stroke-width="2"><rect x="2" y="24" width="18" height="18"/><rect x="28" y="14" width="18" height="28"/><rect x="54" y="6" width="18" height="36"/><path d="M82 22 H118 M100 4 V40"/></svg>
+        <span style="font-family: var(--sans); font-weight: 800; font-size: 21px">Trek cost calculator</span>
+        <span style="font-size: 16px; color: var(--muted); line-height: 1.5">Add up permits, flights, lodges, guide and porter.</span>
+      </a>
+      <div style="display: flex; flex-direction: column; gap: 12px; padding: 24px; background: rgba(255,255,255,0.45); border: 1.5px dashed rgba(15,36,48,0.25); border-radius: 8px">
+        <svg width="120" height="44" viewBox="0 0 120 44" aria-hidden="true" fill="none" stroke="#7A8A92" stroke-width="2"><rect x="2" y="4" width="116" height="36" rx="4"/><path d="M2 16 H118 M30 4 V40 M58 4 V40 M86 4 V40"/></svg>
+        <span style="font-family: var(--sans); font-weight: 800; font-size: 21px">Acclimatization planner</span>
+        <span style="font-size: 16px; color: var(--muted); line-height: 1.5">Build your own itinerary and check the pace. Coming soon.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" style="padding-top: 72px; padding-bottom: 24px; display: flex; flex-wrap: wrap; gap: 48px">
+  <div style="flex: 999 1 560px; min-width: 0">
+    <h2 class="h-section" style="margin-bottom: 8px">From the notebook</h2>
+    <PostRows posts={latest} />
+    <a class="link-accent" href="/articles/" style="display: inline-block; margin-top: 20px">All articles</a>
+  </div>
+  <aside class="card" style="flex: 1 1 300px; min-width: 0; align-self: flex-start; padding: 28px">
+    <div class="kicker">Written by</div>
+    <div style="margin: 10px 0 8px; font-family: var(--sans); font-weight: 800; font-size: 24px">Alberts</div>
+    <p style="margin: 0 0 16px; font-size: 16px; color: var(--muted); line-height: 1.55">[Short bio: your treks in the Khumbu — years, routes, what you saw first-hand.]</p>
+    <a href="/author/alberts/" style="font-family: var(--sans); font-weight: 700; font-size: 15px">More about Alberts</a>
+  </aside>
+</section>
+
+<section class="wrap" style="padding-top: 48px; padding-bottom: 80px">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 20px">
+    <h2 class="h-section">Pictures from the trail</h2>
+    <a class="link-accent" href="/everest-trekking-pictures/">All galleries</a>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px">
+    {[
+      { img: gokyoRi6, alt: 'View from Gokyo Ri', cap: 'From Gokyo Ri, 5,357 m', href: '/best-pictures-from-gokyo-ri/' },
+      { img: lhotse, alt: 'Lhotse seen from Kala Patthar', cap: 'Lhotse from Kala Patthar', href: '/best-pictures-from-kala-patthar/' },
+      { img: maniRimdu, alt: 'Mani Rimdu festival at Tengboche monastery', cap: 'Mani Rimdu festival at Tengboche', href: '/best-pictures-of-mani-rimdu-festival/' },
+      { img: kalaPatthar2, alt: 'Peaks above the Khumbu valley from Kala Patthar', cap: 'The Khumbu valley from Kala Patthar', href: '/best-pictures-from-kala-patthar/' },
+    ].map((f) => (
+      <a href={f.href}>
+        <figure style="margin: 0">
+          <Image src={f.img} alt={f.alt} width={400} height={400} style="display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 6px" />
+          <figcaption style="margin-top: 8px; font-style: italic; font-size: 15px; line-height: 1.4; color: var(--muted)">{f.cap}</figcaption>
+        </figure>
+      </a>
+    ))}
+  </div>
+</section>
+</Base>

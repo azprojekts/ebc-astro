@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE_NAME } from '../lib/site';
+---
+<Base title={`Page not found | ${SITE_NAME}`} noindex>
+  <div class="wrap" style="padding-top: 96px; padding-bottom: 120px; max-width: 760px">
+    <div class="kicker">404</div>
+    <h1 class="h-display" style="margin: 12px 0 16px; font-size: 48px">This trail doesn’t go anywhere</h1>
+    <p style="font-size: 20px; color: var(--muted)">The page may have moved. Try the start page or the list of all articles.</p>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px"><a class="btn btn-dark" href="/">Home</a><a class="btn" href="/articles/">All articles</a></div>
+  </div>
+</Base>

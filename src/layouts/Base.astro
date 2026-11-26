@@ -1,0 +1,116 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/source-serif-4/opsz.css';
+import '@fontsource-variable/source-serif-4/opsz-italic.css';
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { SITE_NAME, GA4_ID, PROD_HOST, HUB_INFO } from '../lib/site';
+
+interface Props {
+  title: string;              // full <title>, 1:1 with the old site
+  description?: string;
+  ogType?: 'website' | 'article';
+  image?: ImageMetadata;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+  activeHub?: string;
+}
+const { title, description, ogType = 'website', image, jsonLd, noindex = false, activeHub } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const og = image ? new URL((await getImage({ src: image, width: 1200, format: 'jpg' })).src, Astro.site).href : undefined;
+const nav = Object.entries(HUB_INFO).map(([slug, h]) => ({ href: `/${slug}/`, label: h.nav, active: slug === activeHub }));
+const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+{description && <meta name="description" content={description}>}
+<link rel="canonical" href={canonical}>
+{noindex && <meta name="robots" content="noindex, follow">}
+<meta property="og:site_name" content={SITE_NAME}>
+<meta property="og:type" content={ogType}>
+<meta property="og:title" content={title}>
+{description && <meta property="og:description" content={description}>}
+<meta property="og:url" content={canonical}>
+{og && <meta property="og:image" content={og}>}
+<meta name="twitter:card" content={og ? 'summary_large_image' : 'summary'}>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate" type="application/rss+xml" title={SITE_NAME} href="/rss.xml">
+<meta name="theme-color" content="#F5F7F6">
+{ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+<!-- Google tag with Consent Mode v2: denied until the visitor agrees; loads only on the production domain -->
+<script is:inline define:vars={{ GA4_ID, PROD_HOST }}>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  window.gtag = gtag;
+  gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', wait_for_update: 500 });
+  try { if (localStorage.getItem('ebc-consent') === 'granted') gtag('consent', 'update', { ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted' }); } catch (e) {}
+  if (location.hostname === PROD_HOST) {
+    gtag('js', new Date());
+    gtag('config', GA4_ID);
+    var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID; document.head.appendChild(s);
+  }
+</script>
+</head>
+<body>
+<a class="visually-hidden" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg width="34" height="24" viewBox="0 0 34 24" aria-hidden="true" fill="none" stroke="#0F2430" stroke-width="2" stroke-linejoin="round"><path d="M1 23 L11 7 L16 14 L22 3 L33 23 Z"/><path d="M19 8 L22 3 L25 8" stroke="#C2410C"/></svg>
+      EBC Trek Guide
+    </a>
+    <nav class="nav" aria-label="Main">
+      {nav.map((n) => <a href={n.href} aria-current={n.active ? 'page' : undefined}>{n.label}</a>)}
+      <a href="/tools/elevation-profile/" style="color: var(--accent)">Tools</a>
+    </nav>
+  </div>
+</header>
+
+<div id="main"><slot /></div>
+
+<footer class="site-footer">
+  <div class="wrap top">
+    <div style="flex: 1 1 280px">
+      <div style="font-weight: 800; font-size: 19px; color: var(--ink)">EBC Trek Guide</div>
+      <p style="margin: 10px 0 0; line-height: 1.6; max-width: 340px">Independent notes on the Everest Base Camp trek, since 2010.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="/everest-base-camp-trek/">Start here</a><a href="/author/alberts/">About</a>
+      <a href="/altitude-sickness/">Altitude</a><a href="/privacy/">Privacy</a>
+      <a href="/tools/elevation-profile/">Tools</a><button type="button" data-consent-open>Cookie settings</button>
+    </nav>
+  </div>
+  <div class="bottom"><div class="wrap num">© 2010–{new Date().getFullYear()} Everest Base Camp Trek Guide</div></div>
+</footer>
+
+<div class="consent" role="dialog" aria-label="Cookie consent" hidden data-consent>
+  <div style="font-weight: 800; font-size: 17px; margin-bottom: 6px">Cookies?</div>
+  <p style="margin: 0; font-size: 14px; line-height: 1.5; color: var(--muted)">We use Google Analytics to see which pages people read, and Google ads to keep the site free. They only run if you agree.</p>
+  <div class="row">
+    <button type="button" class="btn btn-dark" data-consent-choice="granted">Accept</button>
+    <button type="button" class="btn" data-consent-choice="denied">Reject</button>
+  </div>
+</div>
+<script>
+  // Consent banner (temporary; AdSense in the EEA needs a Google-certified CMP — see step 6)
+  const box = document.querySelector<HTMLElement>('[data-consent]');
+  const KEY = 'ebc-consent';
+  const read = () => { try { return localStorage.getItem(KEY); } catch { return null; } };
+  if (box && !read()) box.hidden = false;
+  document.querySelectorAll<HTMLButtonElement>('[data-consent-choice]').forEach((b) =>
+    b.addEventListener('click', () => {
+      const v = b.dataset.consentChoice as 'granted' | 'denied';
+      try { localStorage.setItem(KEY, v); } catch {}
+      (window as any).gtag?.('consent', 'update', { ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v });
+      if (box) box.hidden = true;
+    }),
+  );
+  document.querySelector('[data-consent-open]')?.addEventListener('click', () => { if (box) box.hidden = false; });
+</script>
+</body>
+</html>

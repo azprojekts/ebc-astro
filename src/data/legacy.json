@@ -1,0 +1,1104 @@
+{
+ "categories": [
+  {
+   "slug": "acclimatization",
+   "name": "Acclimatization",
+   "description": "",
+   "count": 2
+  },
+  {
+   "slug": "accomodation",
+   "name": "Accomodation",
+   "description": "",
+   "count": 2
+  },
+  {
+   "slug": "altitude-sickness",
+   "name": "Altitude Sickness",
+   "description": "",
+   "count": 2
+  },
+  {
+   "slug": "annapurna-trekking",
+   "name": "Annapurna Trekking",
+   "description": "",
+   "count": 6
+  },
+  {
+   "slug": "drinking-water-2",
+   "name": "Drinking Water",
+   "description": "",
+   "count": 1
+  },
+  {
+   "slug": "everest-base-camp-trek",
+   "name": "Everest Base Camp Trek",
+   "description": "",
+   "count": 9
+  },
+  {
+   "slug": "everest-trekking-pictures",
+   "name": "Everest Trekking Pictures",
+   "description": "",
+   "count": 3
+  },
+  {
+   "slug": "how-long-to-trek",
+   "name": "How Long to Trek",
+   "description": "",
+   "count": 1
+  },
+  {
+   "slug": "internet-in-nepal",
+   "name": "Internet in Nepal",
+   "description": "",
+   "count": 1
+  },
+  {
+   "slug": "lukla",
+   "name": "Lukla",
+   "description": "",
+   "count": 1
+  },
+  {
+   "slug": "organized-treks",
+   "name": "Organized Treks",
+   "description": "",
+   "count": 1
+  },
+  {
+   "slug": "trekking-basics",
+   "name": "Trekking basics",
+   "description": "",
+   "count": 13
+  },
+  {
+   "slug": "trekking-food",
+   "name": "Trekking Food",
+   "description": "",
+   "count": 5
+  },
+  {
+   "slug": "trekking-in-nepal",
+   "name": "Trekking in Nepal",
+   "description": "",
+   "count": 14
+  },
+  {
+   "slug": "uncategorized",
+   "name": "Uncategorized",
+   "description": "",
+   "count": 0
+  },
+  {
+   "slug": "what-is-a-trek",
+   "name": "What is a Trek",
+   "description": "",
+   "count": 2
+  },
+  {
+   "slug": "what-kind-of-trekking",
+   "name": "What kind of Trekking",
+   "description": "",
+   "count": 2
+  },
+  {
+   "slug": "when-to-trek-nepal",
+   "name": "When to Trek Nepal",
+   "description": "",
+   "count": 1
+  }
+ ],
+ "tags": [
+  {
+   "slug": "acap",
+   "name": "ACAP",
+   "count": 1
+  },
+  {
+   "slug": "acclimation",
+   "name": "Acclimation",
+   "count": 1
+  },
+  {
+   "slug": "acetazolamide",
+   "name": "Acetazolamide",
+   "count": 1
+  },
+  {
+   "slug": "acute-mountain-sickness",
+   "name": "Acute Mountain Sickness",
+   "count": 1
+  },
+  {
+   "slug": "acute-mountain-sickness-ams",
+   "name": "Acute Mountain Sickness (AMS)",
+   "count": 1
+  },
+  {
+   "slug": "adventure-travel-company",
+   "name": "Adventure Travel Company",
+   "count": 1
+  },
+  {
+   "slug": "agni-air",
+   "name": "Agni Air",
+   "count": 1
+  },
+  {
+   "slug": "altitude-acclimation",
+   "name": "Altitude Acclimation",
+   "count": 1
+  },
+  {
+   "slug": "altitude-acclimatization-tips",
+   "name": "Altitude Acclimatization Tips",
+   "count": 1
+  },
+  {
+   "slug": "altitude-illness",
+   "name": "Altitude Illness",
+   "count": 1
+  },
+  {
+   "slug": "altitude-sickness-symptoms",
+   "name": "Altitude Sickness Symptoms",
+   "count": 1
+  },
+  {
+   "slug": "americans-on-everest",
+   "name": "Americans on Everest",
+   "count": 1
+  },
+  {
+   "slug": "ams",
+   "name": "AMS",
+   "count": 1
+  },
+  {
+   "slug": "annapurna",
+   "name": "Annapurna",
+   "count": 1
+  },
+  {
+   "slug": "annapurna-base-camp",
+   "name": "Annapurna Base Camp",
+   "count": 1
+  },
+  {
+   "slug": "annapurna-circuit",
+   "name": "Annapurna Circuit",
+   "count": 1
+  },
+  {
+   "slug": "annapurna-circuit-trek",
+   "name": "Annapurna Circuit Trek",
+   "count": 4
+  },
+  {
+   "slug": "annapurna-conservation-area-project",
+   "name": "Annapurna Conservation Area Project",
+   "count": 1
+  },
+  {
+   "slug": "annapurna-sanctuary",
+   "name": "Annapurna Sanctuary",
+   "count": 1
+  },
+  {
+   "slug": "around-annapurna",
+   "name": "Around Annapurna",
+   "count": 1
+  },
+  {
+   "slug": "around-annapurna-trek",
+   "name": "Around Annapurna Trek",
+   "count": 3
+  },
+  {
+   "slug": "bhatti",
+   "name": "Bhatti",
+   "count": 1
+  },
+  {
+   "slug": "bhattis",
+   "name": "Bhattis",
+   "count": 2
+  },
+  {
+   "slug": "breakfast-at-trekking-lodge",
+   "name": "Breakfast at trekking lodge",
+   "count": 1
+  },
+  {
+   "slug": "buddhist-dance",
+   "name": "Buddhist dance",
+   "count": 1
+  },
+  {
+   "slug": "camping",
+   "name": "Camping",
+   "count": 1
+  },
+  {
+   "slug": "camping-trek",
+   "name": "Camping Trek",
+   "count": 1
+  },
+  {
+   "slug": "camping-treks",
+   "name": "Camping Treks",
+   "count": 2
+  },
+  {
+   "slug": "chapatti",
+   "name": "Chapatti",
+   "count": 2
+  },
+  {
+   "slug": "chicken-curry",
+   "name": "Chicken Curry",
+   "count": 1
+  },
+  {
+   "slug": "chitwan",
+   "name": "Chitwan",
+   "count": 1
+  },
+  {
+   "slug": "chitwan-national-park",
+   "name": "Chitwan National Park",
+   "count": 1
+  },
+  {
+   "slug": "cho-la-pass",
+   "name": "Cho La Pass",
+   "count": 2
+  },
+  {
+   "slug": "cho-oyu",
+   "name": "Cho Oyu",
+   "count": 1
+  },
+  {
+   "slug": "dal-bhaat",
+   "name": "Dal Bhaat",
+   "count": 2
+  },
+  {
+   "slug": "dehydration",
+   "name": "Dehydration",
+   "count": 1
+  },
+  {
+   "slug": "dexamethasone",
+   "name": "Dexamethasone",
+   "count": 1
+  },
+  {
+   "slug": "diamox",
+   "name": "Diamox",
+   "count": 1
+  },
+  {
+   "slug": "dingboche",
+   "name": "Dingboche",
+   "count": 1
+  },
+  {
+   "slug": "dinner-at-trekking-lodge",
+   "name": "Dinner at trekking lodge",
+   "count": 1
+  },
+  {
+   "slug": "dolpo",
+   "name": "Dolpo",
+   "count": 1
+  },
+  {
+   "slug": "dried-fruit",
+   "name": "Dried fruit",
+   "count": 1
+  },
+  {
+   "slug": "everest-base-camp",
+   "name": "Everest Base Camp",
+   "count": 3
+  },
+  {
+   "slug": "everest-base-camp-trek-pictures",
+   "name": "Everest Base Camp Trek Pictures",
+   "count": 2
+  },
+  {
+   "slug": "everest-trek",
+   "name": "Everest Trek",
+   "count": 2
+  },
+  {
+   "slug": "flight-kathmandu-to-lukla",
+   "name": "Flight Kathmandu to Lukla",
+   "count": 1
+  },
+  {
+   "slug": "gamow-bag",
+   "name": "Gamow Bag",
+   "count": 2
+  },
+  {
+   "slug": "ganja-la-pass",
+   "name": "Ganja La Pass",
+   "count": 1
+  },
+  {
+   "slug": "garlic-soup",
+   "name": "Garlic Soup",
+   "count": 3
+  },
+  {
+   "slug": "ghandruk",
+   "name": "Ghandruk",
+   "count": 2
+  },
+  {
+   "slug": "ghorapani",
+   "name": "Ghorapani",
+   "count": 1
+  },
+  {
+   "slug": "ginkgo-biloba",
+   "name": "Ginkgo Biloba",
+   "count": 1
+  },
+  {
+   "slug": "gokyo",
+   "name": "Gokyo",
+   "count": 1
+  },
+  {
+   "slug": "gokyo-2d-lake",
+   "name": "Gokyo 2d Lake",
+   "count": 1
+  },
+  {
+   "slug": "gokyo-3d-lake",
+   "name": "Gokyo 3d Lake",
+   "count": 1
+  },
+  {
+   "slug": "gokyo-ri",
+   "name": "Gokyo Ri",
+   "count": 2
+  },
+  {
+   "slug": "gokyo-trek",
+   "name": "Gokyo Trek",
+   "count": 5
+  },
+  {
+   "slug": "gorak-shep",
+   "name": "Gorak Shep",
+   "count": 1
+  },
+  {
+   "slug": "gorkha-air",
+   "name": "Gorkha Air",
+   "count": 1
+  },
+  {
+   "slug": "gosainkund-trek",
+   "name": "Gosainkund Trek",
+   "count": 1
+  },
+  {
+   "slug": "group-treks",
+   "name": "Group Treks",
+   "count": 1
+  },
+  {
+   "slug": "guest-house-xanadu",
+   "name": "Guest house Xanadu",
+   "count": 1
+  },
+  {
+   "slug": "hace",
+   "name": "HACE",
+   "count": 1
+  },
+  {
+   "slug": "hape",
+   "name": "HAPE",
+   "count": 1
+  },
+  {
+   "slug": "high-altitude-cerebral-edema",
+   "name": "High Altitude Cerebral Edema",
+   "count": 1
+  },
+  {
+   "slug": "high-altitude-cerebral-edema-hace",
+   "name": "High Altitude Cerebral Edema (HACE)",
+   "count": 1
+  },
+  {
+   "slug": "high-altitude-pulmonary-edema",
+   "name": "High Altitude Pulmonary Edema",
+   "count": 1
+  },
+  {
+   "slug": "high-altitude-pulmonary-edema-hape",
+   "name": "High Altitude Pulmonary Edema (HAPE)",
+   "count": 1
+  },
+  {
+   "slug": "hiking-food",
+   "name": "Hiking Food",
+   "count": 2
+  },
+  {
+   "slug": "himalaya",
+   "name": "Himalaya",
+   "count": 1
+  },
+  {
+   "slug": "himalaya-rescue-association",
+   "name": "Himalaya Rescue Association",
+   "count": 1
+  },
+  {
+   "slug": "humla",
+   "name": "Humla",
+   "count": 1
+  },
+  {
+   "slug": "hyperbaric-chamber",
+   "name": "Hyperbaric Chamber",
+   "count": 1
+  },
+  {
+   "slug": "inmarsat",
+   "name": "INMARSAT",
+   "count": 1
+  },
+  {
+   "slug": "island-peak",
+   "name": "Island Peak",
+   "count": 2
+  },
+  {
+   "slug": "jiri",
+   "name": "Jiri",
+   "count": 1
+  },
+  {
+   "slug": "jomsom",
+   "name": "Jomsom",
+   "count": 3
+  },
+  {
+   "slug": "kagbeni",
+   "name": "Kagbeni",
+   "count": 1
+  },
+  {
+   "slug": "kala-pathar",
+   "name": "Kala Pathar",
+   "count": 1
+  },
+  {
+   "slug": "kala-patthar",
+   "name": "Kala Patthar",
+   "count": 1
+  },
+  {
+   "slug": "kanchenjunga",
+   "name": "Kanchenjunga",
+   "count": 1
+  },
+  {
+   "slug": "kathmandu",
+   "name": "Kathmandu",
+   "count": 7
+  },
+  {
+   "slug": "khumbu",
+   "name": "Khumbu",
+   "count": 3
+  },
+  {
+   "slug": "khumbu-nepal",
+   "name": "Khumbu Nepal",
+   "count": 1
+  },
+  {
+   "slug": "khumjung",
+   "name": "Khumjung",
+   "count": 1
+  },
+  {
+   "slug": "kongma-la-pass",
+   "name": "Kongma La Pass",
+   "count": 1
+  },
+  {
+   "slug": "kongma-ri",
+   "name": "Kongma Ri",
+   "count": 1
+  },
+  {
+   "slug": "kwande-ri",
+   "name": "Kwande Ri",
+   "count": 1
+  },
+  {
+   "slug": "langtang",
+   "name": "Langtang",
+   "count": 2
+  },
+  {
+   "slug": "langtang-trek",
+   "name": "Langtang Trek",
+   "count": 2
+  },
+  {
+   "slug": "laurebina-la-pass",
+   "name": "Laurebina La Pass",
+   "count": 1
+  },
+  {
+   "slug": "lhotse",
+   "name": "Lhotse",
+   "count": 2
+  },
+  {
+   "slug": "lobuche",
+   "name": "Lobuche",
+   "count": 2
+  },
+  {
+   "slug": "local-flights-in-nepal",
+   "name": "Local flights in Nepal",
+   "count": 1
+  },
+  {
+   "slug": "lodge-treks",
+   "name": "Lodge Treks",
+   "count": 2
+  },
+  {
+   "slug": "lodges",
+   "name": "Lodges",
+   "count": 2
+  },
+  {
+   "slug": "lukla-nepal",
+   "name": "Lukla Nepal",
+   "count": 2
+  },
+  {
+   "slug": "lunch-at-trekking-lodge",
+   "name": "Lunch at trekking lodge",
+   "count": 1
+  },
+  {
+   "slug": "machermo",
+   "name": "Machermo",
+   "count": 1
+  },
+  {
+   "slug": "makalu",
+   "name": "Makalu",
+   "count": 1
+  },
+  {
+   "slug": "manang",
+   "name": "Manang",
+   "count": 1
+  },
+  {
+   "slug": "manaslu",
+   "name": "Manaslu",
+   "count": 1
+  },
+  {
+   "slug": "mani-rimdu-festival",
+   "name": "Mani Rimdu festival",
+   "count": 1
+  },
+  {
+   "slug": "mera-peak",
+   "name": "Mera Peak",
+   "count": 2
+  },
+  {
+   "slug": "middle-hills",
+   "name": "Middle Hills",
+   "count": 2
+  },
+  {
+   "slug": "minerals",
+   "name": "Minerals",
+   "count": 1
+  },
+  {
+   "slug": "momo",
+   "name": "Momo",
+   "count": 2
+  },
+  {
+   "slug": "mountain-sickness",
+   "name": "Mountain Sickness",
+   "count": 1
+  },
+  {
+   "slug": "muktinath",
+   "name": "Muktinath",
+   "count": 1
+  },
+  {
+   "slug": "mustang",
+   "name": "Mustang",
+   "count": 2
+  },
+  {
+   "slug": "namche-bazaar",
+   "name": "Namche Bazaar",
+   "count": 2
+  },
+  {
+   "slug": "ncell",
+   "name": "Ncell",
+   "count": 1
+  },
+  {
+   "slug": "nepal-himalaya",
+   "name": "Nepal Himalaya",
+   "count": 2
+  },
+  {
+   "slug": "nepalese-food",
+   "name": "Nepalese food",
+   "count": 2
+  },
+  {
+   "slug": "nifedipine",
+   "name": "Nifedipine",
+   "count": 1
+  },
+  {
+   "slug": "nilgiri",
+   "name": "Nilgiri",
+   "count": 1
+  },
+  {
+   "slug": "oatmeal",
+   "name": "Oatmeal",
+   "count": 1
+  },
+  {
+   "slug": "organised-treks",
+   "name": "Organised Treks",
+   "count": 1
+  },
+  {
+   "slug": "pheriche",
+   "name": "Pheriche",
+   "count": 1
+  },
+  {
+   "slug": "pictures-of-kala-patthar",
+   "name": "Pictures of Kala Patthar",
+   "count": 1
+  },
+  {
+   "slug": "pictures-of-mani-rimdu",
+   "name": "Pictures of Mani Rimdu",
+   "count": 1
+  },
+  {
+   "slug": "pokhara",
+   "name": "Pokhara",
+   "count": 3
+  },
+  {
+   "slug": "pumori",
+   "name": "Pumori",
+   "count": 1
+  },
+  {
+   "slug": "raisins",
+   "name": "Raisins",
+   "count": 1
+  },
+  {
+   "slug": "renjo-la-pass",
+   "name": "Renjo La Pass",
+   "count": 2
+  },
+  {
+   "slug": "shangrila-air",
+   "name": "Shangrila Air",
+   "count": 1
+  },
+  {
+   "slug": "sherpa-villages",
+   "name": "Sherpa villages",
+   "count": 1
+  },
+  {
+   "slug": "sirdar",
+   "name": "Sirdar",
+   "count": 1
+  },
+  {
+   "slug": "staying-at-nepali-home",
+   "name": "Staying at Nepali Home",
+   "count": 1
+  },
+  {
+   "slug": "tea-house-menu",
+   "name": "Tea House Menu",
+   "count": 1
+  },
+  {
+   "slug": "tengboche",
+   "name": "Tengboche",
+   "count": 2
+  },
+  {
+   "slug": "tengboche-monastery",
+   "name": "Tengboche Monastery",
+   "count": 1
+  },
+  {
+   "slug": "thamel",
+   "name": "Thamel",
+   "count": 2
+  },
+  {
+   "slug": "the-ascent-of-everest",
+   "name": "The Ascent of Everest",
+   "count": 1
+  },
+  {
+   "slug": "thorung-la-pass",
+   "name": "Thorung La Pass",
+   "count": 2
+  },
+  {
+   "slug": "tibetan-bread",
+   "name": "Tibetan bread",
+   "count": 2
+  },
+  {
+   "slug": "tickets-to-lukla",
+   "name": "Tickets to Lukla",
+   "count": 1
+  },
+  {
+   "slug": "trekking",
+   "name": "Trekking",
+   "count": 1
+  },
+  {
+   "slug": "trekking-agency",
+   "name": "Trekking Agency",
+   "count": 1
+  },
+  {
+   "slug": "trekking-company",
+   "name": "Trekking Company",
+   "count": 1
+  },
+  {
+   "slug": "trekking-lodge-food",
+   "name": "Trekking lodge food",
+   "count": 1
+  },
+  {
+   "slug": "trekking-lodge-menu",
+   "name": "Trekking Lodge Menu",
+   "count": 1
+  },
+  {
+   "slug": "trekking-peaks",
+   "name": "Trekking Peaks",
+   "count": 1
+  },
+  {
+   "slug": "trekking-season",
+   "name": "Trekking Season",
+   "count": 1
+  },
+  {
+   "slug": "tsampa-porridge",
+   "name": "Tsampa porridge",
+   "count": 1
+  },
+  {
+   "slug": "tsmapa-porridge",
+   "name": "Tsmapa porridge",
+   "count": 1
+  },
+  {
+   "slug": "vitamins",
+   "name": "Vitamins",
+   "count": 1
+  },
+  {
+   "slug": "yak-cheese",
+   "name": "Yak cheese",
+   "count": 1
+  },
+  {
+   "slug": "yak-steak",
+   "name": "Yak steak",
+   "count": 2
+  },
+  {
+   "slug": "yeti-airlines",
+   "name": "Yeti Airlines",
+   "count": 1
+  }
+ ],
+ "attachments": [
+  {
+   "attachment": "/best-pictures-of-mani-rimdu-festival/mani-rimdu-5/",
+   "parent": 495
+  },
+  {
+   "attachment": "/best-pictures-of-mani-rimdu-festival/mani-rimdu-4/",
+   "parent": 495
+  },
+  {
+   "attachment": "/best-pictures-of-mani-rimdu-festival/mani-rimdu-3/",
+   "parent": 495
+  },
+  {
+   "attachment": "/best-pictures-of-mani-rimdu-festival/mani-rimdu-2/",
+   "parent": 495
+  },
+  {
+   "attachment": "/best-pictures-of-mani-rimdu-festival/mani-rimdu-1/",
+   "parent": 495
+  },
+  {
+   "attachment": "/best-pictures-of-mani-rimdu-festival/mani-rimdu/",
+   "parent": 495
+  },
+  {
+   "attachment": "/best-pictures-from-kala-patthar/kala-patthar-top/",
+   "parent": 484
+  },
+  {
+   "attachment": "/best-pictures-from-kala-patthar/kala-patthar/",
+   "parent": 484
+  },
+  {
+   "attachment": "/best-pictures-from-kala-patthar/from-kala-patthar/",
+   "parent": 484
+  },
+  {
+   "attachment": "/best-pictures-from-kala-patthar/from-kala-patthar-2/",
+   "parent": 484
+  },
+  {
+   "attachment": "/best-pictures-from-kala-patthar/from-kala-patthar-1/",
+   "parent": 484
+  },
+  {
+   "attachment": "/best-pictures-from-kala-patthar/lhotse/",
+   "parent": 484
+  },
+  {
+   "attachment": "/best-pictures-from-gokyo-ri/gokyo-ri-2/",
+   "parent": 467
+  },
+  {
+   "attachment": "/best-pictures-from-gokyo-ri/from-gokyo-ri-7/",
+   "parent": 467
+  },
+  {
+   "attachment": "/best-pictures-from-gokyo-ri/from-gokyo-ri-6/",
+   "parent": 467
+  },
+  {
+   "attachment": "/best-pictures-from-gokyo-ri/from-gokyo-ri-5/",
+   "parent": 467
+  },
+  {
+   "attachment": "/best-pictures-from-gokyo-ri/from-gokyo-ri-4/",
+   "parent": 467
+  },
+  {
+   "attachment": "/best-pictures-from-gokyo-ri/from-gokyo-ri-3/",
+   "parent": 467
+  },
+  {
+   "attachment": "/best-pictures-from-gokyo-ri/from-gokyo-ri-2/",
+   "parent": 467
+  },
+  {
+   "attachment": "/best-pictures-from-gokyo-ri/from-gokyo-ri-1/",
+   "parent": 467
+  },
+  {
+   "attachment": "/best-pictures-from-gokyo-ri/from-gokyo-ri/",
+   "parent": 467
+  },
+  {
+   "attachment": "/favicon1/",
+   "parent": null
+  },
+  {
+   "attachment": "/favicon/",
+   "parent": null
+  },
+  {
+   "attachment": "/himalayas-pictures/everest-khumbu-icefall-panorama-1/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/everest-khumbu-icefall-panorama/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/thamserku/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/thamserku-1/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/sunset-on-everest/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/sherpas-works-on-khumbu-glacier-everest-expedition/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/namche-bazaar-market/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/namche-bazaar-at-night/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/namche-bazaar-2/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/namche-bazaar/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/namche-bazaar-1/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/lodge-near-thamserku/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/khumbu-icefall-everest-nuptse/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/himalayas-from-space/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/gokyo-ri/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/gokyo-lakes-from-gokyo-ri-1/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/gokyo-at-3d-lake/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/gokyo-3d-lake/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/everest-summit/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/everest-lhotse-nepal/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/everest-from-gokyo-ri/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/everest-camp-on-8300-m/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/cho-oyu/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/cho-la-pass-starting/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/cho-la-pass-gokyo-side/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/cho-la-pass-east-side-5320-m/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/a-snowy-namche-bazaar/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/everest-from-taweche/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/climbing-everest/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/gokyo-lakes-from-gokyo-ri/",
+   "parent": 187
+  },
+  {
+   "attachment": "/himalayas-pictures/makalu-from-everest/",
+   "parent": 187
+  }
+ ],
+ "ids": {
+  "83": "altitude-acclimatization-for-trekking-10-golden-rules",
+  "309": "foods-to-be-enjoyed-on-an-everest-base-camp-trek",
+  "289": "eating-during-an-everest-base-camp-trek",
+  "292": "trekking-lodge-food-during-an-everest-base-camp-trek",
+  "495": "best-pictures-of-mani-rimdu-festival",
+  "484": "best-pictures-from-kala-patthar",
+  "467": "best-pictures-from-gokyo-ri",
+  "318": "food-for-an-everest-base-camp-trek",
+  "33": "trekking-accommodation",
+  "298": "drinking-water-on-an-everest-base-camp-trek",
+  "132": "internet-at-everest-base-camp",
+  "94": "high-altitude-sickness",
+  "69": "trekking-lodges",
+  "30": "what-kind-of-trekking-in-nepal",
+  "51": "organized-treks-in-nepal-himalaya",
+  "20": "how-long-to-trek-in-nepal",
+  "27": "when-to-trek-in-nepal",
+  "22": "what-is-a-trek-in-nepal",
+  "12": "everest-trekking-starts-in-lukla",
+  "187": "himalayas-pictures"
+ }
+}

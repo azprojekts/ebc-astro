@@ -1,0 +1,93 @@
+---
+import Base from '../../layouts/Base.astro';
+import { SITE_NAME } from '../../lib/site';
+// DEMO VALUES — verify every figure before launch (see project doc). Page is noindex and out of the sitemap until then.
+const PRICES = {
+  checked: '[DATE]', npr: 135, permitsNpr: 3000 + 3000,
+  flight: { ktm: 238, ram: 188 }, room: { basic: 10, comfort: 25 }, guide: 30, porter: 22,
+};
+const rows = [
+  ['days', 'Days on the trail', 'Lukla to Lukla, incl. rest days'],
+  ['food', 'Food & drinks per day', 'Three meals, tea, boiled water'],
+];
+---
+<Base title={`What will your EBC trek cost? | ${SITE_NAME}`} description="Calculator for the cost of the Everest Base Camp trek: permits, Lukla flights, teahouses, food, guide and porter." noindex>
+<div class="wrap" style="padding-top: 40px; padding-bottom: 72px; font-family: var(--sans)">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Tools</span><span aria-hidden="true">/</span><span>Cost calculator</span></nav>
+  <h1 class="h-display" style="margin: 18px 0 8px; font-size: clamp(34px, 4vw, 48px)">What will your EBC trek cost?</h1>
+  <p style="margin: 0 0 28px; max-width: 720px; font-family: var(--serif); font-size: 19px; color: var(--muted)">Costs on the trail from Kathmandu and back, per person. International flights, visa, insurance and gear are not included.</p>
+
+  <div data-calc data-prices={JSON.stringify(PRICES)} style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+    <div class="card" style="flex: 999 1 560px; min-width: 0; border-radius: 10px; padding: 8px 28px">
+      {rows.map(([k, t, s]) => (
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 20px 0; border-bottom: 1px solid var(--line-soft)">
+          <div><div style="font-weight: 700; font-size: 18px">{t}</div><div class="meta">{s}</div></div>
+          <div style="display: flex; align-items: center; gap: 10px">
+            <button type="button" class="btn" data-step={k} data-d="-1" aria-label={`Less: ${t}`} style="width: 44px; padding: 0; justify-content: center; font-size: 22px">−</button>
+            <span data-out={k} class="num" style="min-width: 64px; text-align: center; font-weight: 800; font-size: 26px"></span>
+            <button type="button" class="btn" data-step={k} data-d="1" aria-label={`More: ${t}`} style="width: 44px; padding: 0; justify-content: center; font-size: 22px">+</button>
+          </div>
+        </div>
+      ))}
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 20px 0; border-bottom: 1px solid var(--line-soft)">
+        <div><div style="font-weight: 700; font-size: 18px">Flight to Lukla</div><div class="meta" data-out="flightNote"></div></div>
+        <div role="group" aria-label="Flight route" style="display: flex; gap: 6px"><button type="button" class="btn" data-opt="route" data-v="ktm">Kathmandu</button><button type="button" class="btn" data-opt="route" data-v="ram">Ramechhap</button></div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 20px 0; border-bottom: 1px solid var(--line-soft)">
+        <div><div style="font-weight: 700; font-size: 18px">Teahouse room</div><div class="meta">Per night, price usually rises with altitude</div></div>
+        <div role="group" aria-label="Room level" style="display: flex; gap: 6px"><button type="button" class="btn" data-opt="room" data-v="basic">Basic</button><button type="button" class="btn" data-opt="room" data-v="comfort">Comfort</button></div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding: 20px 0">
+        <div><div style="font-weight: 700; font-size: 18px">Guide and porter</div><div class="meta">Per day</div></div>
+        <div style="display: flex; gap: 6px"><button type="button" class="btn" data-toggle="guide">Guide</button><button type="button" class="btn" data-toggle="porter">Porter</button></div>
+      </div>
+    </div>
+    <div style="flex: 1 1 360px; min-width: 0; background: #0F2430; color: #E8EEF0; border-radius: 10px; padding: 28px" aria-live="polite">
+      <div style="font-size: 15px; font-weight: 600; color: #F2894E">Estimated total</div>
+      <div data-out="total" class="num" style="font-weight: 800; font-size: 56px; line-height: 1.1; letter-spacing: -0.02em; color: #FFFFFF"></div>
+      <div style="font-size: 15px; color: #9FB3BC">per person, about <span data-out="perDay" class="num"></span> a day</div>
+      <div data-out="bar" aria-hidden="true" style="display: flex; height: 14px; border-radius: 7px; overflow: hidden; margin: 22px 0 18px; background: #2B4553"></div>
+      <div data-out="parts" style="display: flex; flex-direction: column; gap: 10px"></div>
+      <p style="margin: 22px 0 0; padding-top: 16px; border-top: 1px solid #2B4553; font-size: 13px; color: #9FB3BC; line-height: 1.55">Permits: Sagarmatha National Park NPR 3,000 + Khumbu Pasang Lhamu NPR 3,000. Exchange rate USD 1 = NPR {PRICES.npr}. Prices last checked {PRICES.checked}.</p>
+    </div>
+  </div>
+</div>
+<script>
+  const root = document.querySelector<HTMLElement>('[data-calc]');
+  if (root) {
+    const P = JSON.parse(root.dataset.prices || '{}');
+    const s: Record<string, any> = { days: 12, food: 30, route: 'ktm', room: 'basic', guide: true, porter: false };
+    const lim: Record<string, [number, number, number]> = { days: [9, 20, 1], food: [15, 80, 5] };
+    const usd = (n: number) => '$' + Math.round(n).toLocaleString('en-US');
+    const colors = ['#F2894E', '#8CC3CC', '#FFFFFF', '#C2410C', '#1C6E7D', '#7A8A92'];
+    const $ = (k: string) => root.querySelector<HTMLElement>(`[data-out="${k}"]`)!;
+    const draw = () => {
+      const parts: [string, number][] = [
+        ['Permits', P.permitsNpr / P.npr],
+        ['Flights (return)', 2 * P.flight[s.route]],
+        ['Teahouse rooms', (s.days - 1) * P.room[s.room]],
+        ['Food & drinks', s.days * s.food],
+        ['Guide', s.guide ? s.days * P.guide : 0],
+        ['Porter', s.porter ? s.days * P.porter : 0],
+      ];
+      const total = parts.reduce((a, [, v]) => a + v, 0);
+      $('days').textContent = String(s.days);
+      $('food').textContent = '$' + s.food;
+      $('flightNote').textContent = s.route === 'ktm' ? `Direct from Kathmandu, about $${P.flight.ktm} one way` : `In peak seasons. About $${P.flight.ram} one way, plus the drive to Ramechhap`;
+      $('total').textContent = usd(total);
+      $('perDay').textContent = usd(total / s.days);
+      $('bar').innerHTML = parts.map(([, v], i) => `<div style="width:${(v / total) * 100}%;background:${colors[i]}"></div>`).join('');
+      $('parts').innerHTML = parts.map(([l, v], i) => `<div style="display:flex;justify-content:space-between;gap:12px;font-size:15px"><span style="display:flex;align-items:center;gap:10px"><span style="width:10px;height:10px;border-radius:5px;flex:none;background:${colors[i]}"></span>${l}</span><span class="num" style="color:#fff">${v ? usd(v) : '—'}</span></div>`).join('');
+      root.querySelectorAll<HTMLButtonElement>('[data-opt]').forEach((b) => { const on = s[b.dataset.opt!] === b.dataset.v; b.classList.toggle('btn-dark', on); b.setAttribute('aria-pressed', String(on)); });
+      root.querySelectorAll<HTMLButtonElement>('[data-toggle]').forEach((b) => { const on = !!s[b.dataset.toggle!]; b.classList.toggle('btn-dark', on); b.setAttribute('aria-pressed', String(on)); });
+    };
+    root.querySelectorAll<HTMLButtonElement>('[data-step]').forEach((b) => b.addEventListener('click', () => {
+      const k = b.dataset.step!; const [mn, mx, st] = lim[k];
+      s[k] = Math.min(mx, Math.max(mn, s[k] + Number(b.dataset.d) * st)); draw();
+    }));
+    root.querySelectorAll<HTMLButtonElement>('[data-opt]').forEach((b) => b.addEventListener('click', () => { s[b.dataset.opt!] = b.dataset.v; draw(); }));
+    root.querySelectorAll<HTMLButtonElement>('[data-toggle]').forEach((b) => b.addEventListener('click', () => { s[b.dataset.toggle!] = !s[b.dataset.toggle!]; draw(); }));
+    draw();
+  }
+</script>
+</Base>

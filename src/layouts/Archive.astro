@@ -1,0 +1,17 @@
+---
+import Base from './Base.astro';
+import PostRows from '../components/PostRows.astro';
+import type { Post } from '../lib/site';
+interface Props { title: string; heading: string; kicker: string; intro?: string; posts: Post[]; activeHub?: string; description?: string }
+const { title, heading, kicker, intro, posts, activeHub, description } = Astro.props;
+---
+<Base title={title} description={description} activeHub={activeHub}>
+  <div class="wrap" style="padding-top: 40px; padding-bottom: 80px; max-width: 960px; margin-left: auto; margin-right: auto">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>{heading}</span></nav>
+    <div class="kicker" style="margin-top: 28px">{kicker}</div>
+    <h1 class="h-display" style="margin: 12px 0 14px; font-size: clamp(36px, 4.6vw, 54px)">{heading}</h1>
+    {intro && <p style="margin: 0 0 12px; font-size: 20px; color: var(--muted); max-width: 680px">{intro}</p>}
+    <slot />
+    <PostRows posts={posts} />
+  </div>
+</Base>

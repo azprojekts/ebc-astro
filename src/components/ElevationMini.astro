@@ -1,0 +1,20 @@
+---
+// Small route profile; `mark` highlights a waypoint (Lukla, Gorak Shep, Kala Patthar)
+interface Props { mark?: 'lukla' | 'gorakshep' | 'kalapatthar'; label?: string }
+const { mark = 'kalapatthar', label = 'Where this is on the route' } = Astro.props;
+const pts = 'M12,86 L40,92 L68,72 L96,72 L124,62 L152,49 L180,49 L208,36 L236,31 L254,26 L268,22';
+---
+<div class="card" style="padding: 20px 22px; font-family: var(--sans)">
+  <div style="font-size: 14px; font-weight: 600; color: var(--muted)">{label}</div>
+  <svg viewBox="0 0 280 110" role="img" aria-label="Route profile from Lukla, 2,860 m, to Kala Patthar, 5,545 m" style="display: block; width: 100%; height: auto; margin: 10px 0 6px; font-family: var(--sans); font-variant-numeric: tabular-nums">
+    <path d={pts + ' L268,100 L12,100 Z'} fill="#0F2430" opacity="0.06"/>
+    <path d={pts} fill="none" stroke="#0F2430" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="12" cy="86" r={mark === 'lukla' ? 6 : 4} fill={mark === 'lukla' ? '#C2410C' : '#FFFFFF'} stroke={mark === 'lukla' ? 'none' : '#0F2430'} stroke-width="2"/>
+    <circle cx="236" cy="31" r={mark === 'gorakshep' ? 6 : 0} fill="#1C6E7D"/>
+    <circle cx="268" cy="22" r={mark === 'kalapatthar' ? 6 : 4} fill={mark === 'kalapatthar' ? '#C2410C' : '#FFFFFF'} stroke={mark === 'kalapatthar' ? 'none' : '#0F2430'} stroke-width="2"/>
+    <text x="12" y="72" font-size="11" fill={mark === 'lukla' ? '#C2410C' : '#4A5A63'} font-weight="600">Lukla 2,860</text>
+    {mark === 'gorakshep' && <text x="228" y="50" font-size="11" fill="#1C6E7D" text-anchor="end">Gorak Shep 5,164</text>}
+    <text x="268" y="12" font-size="11" fill={mark === 'kalapatthar' ? '#C2410C' : '#4A5A63'} text-anchor="end" font-weight="600">Kala Patthar 5,545</text>
+  </svg>
+  <a href="/tools/elevation-profile/" class="link-accent" style="font-size: 15px">Full elevation profile</a>
+</div>
