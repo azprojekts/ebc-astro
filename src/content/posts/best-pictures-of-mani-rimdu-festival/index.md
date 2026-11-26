@@ -20,27 +20,27 @@ legacy:
 cover: ./Mani-Rimdu-5.jpg
 ---
 
-## #1. Best Pictures of Mani Rimdu festival in Tengboche Monastery: old Buddhist woman
+## #1. Mani Rimdu festival: old Buddhist woman in Tengboche Monastery
 
 ![Buddhist woman in Mani Rimdu festival Tengboche](./Mani-Rimdu-5.jpg)
 
-## #2. Best Pictures of Mani Rimdu festival in Tengboche Monastery: Buddhist woman watching
+## #2. Buddhist woman watching
 
 ![Buddhist woman in Mani Rimdu festival Tengboche](./Mani-Rimdu-4.jpg)
 
-## #3. Best Pictures of Mani Rimdu festival: Buddhist monk dance in the yard of Tengboche Monastery
+## #3. Buddhist monk dance in the yard of Tengboche Monastery
 
 ![Buddhist dance in Mani Rimdu festival Tengboche Monastery](./Mani-Rimdu-3.jpg)
 
-## #4. Best Pictures of Mani Rimdu festival in Tengboche Monastery: Buddhist monk dancing
+## #4. Buddhist monk dancing
 
 ![Buddhist monk dancing in Mani Rimdu festival Tengboche](./Mani-Rimdu-2.jpg)
 
-## #5. Best Pictures of Mani Rimdu festival: Buddhist monks dancing in Tengboche Monastery
+## #5. Buddhist monks dancing
 
 ![Buddhist monks dancing in Mani Rimdu festival Tengboche](./Mani-Rimdu-1.jpg)
 
-## #6. Best Pictures of Mani Rimdu festival in Tengboche Monastery: Buddhist monks dancing
+## #6. Mani Rimdu festival in Tengboche Monastery
 
 ![Buddhist monks dancing in Mani Rimdu festival Tengboche](./Mani-Rimdu.jpg)
 
