@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE_NAME } from '../lib/site';
+---
+<Base title={`Search | ${SITE_NAME}`} noindex>
+  <div class="wrap" style="padding-top: 48px; padding-bottom: 96px; max-width: 860px">
+    <h1 class="h-display" style="margin: 0 0 24px; font-size: clamp(34px, 4vw, 48px)">Search the guide</h1>
+    <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+    <div id="search" class="sans"></div>
+    <noscript><p>Search needs JavaScript. Try the <a href="/articles/">list of all articles</a>.</p></noscript>
+  </div>
+  <script is:inline src="/pagefind/pagefind-ui.js"></script>
+  <script is:inline>
+    window.addEventListener('DOMContentLoaded', function () {
+      if (!window.PagefindUI) return;
+      var ui = new PagefindUI({ element: '#search', showSubResults: true, showImages: false, resetStyles: false });
+      var q = new URLSearchParams(location.search).get('q');
+      if (q) ui.triggerSearch(q);
+    });
+  </script>
+</Base>

@@ -154,13 +154,13 @@ for m in media:
     src = m['source_url']
     path, local = fetch(src)
     mirror(path, local)
-    attachments.append({'attachment': urllib.parse.urlsplit(m['link']).path, 'parent': m['post']})
+    attachments.append({'attachment': urllib.parse.urlsplit(m['link']).path, 'parent': m['post'], 'id': m['id']})
 
 # categories + taxonomy data for archive pages
 taxo = {
-    'categories': [{'slug': c['slug'], 'name': html.unescape(c['name']), 'description': c['description'], 'count': c['count']}
+    'categories': [{'id': c['id'], 'slug': c['slug'], 'name': html.unescape(c['name']), 'description': c['description'], 'count': c['count']}
                    for c in cats.values()],
-    'tags': [{'slug': t['slug'], 'name': html.unescape(t['name']), 'count': t['count']} for t in tags.values()],
+    'tags': [{'id': t['id'], 'slug': t['slug'], 'name': html.unescape(t['name']), 'count': t['count']} for t in tags.values()],
     'attachments': attachments,
     'ids': {str(i['id']): i['slug'] for i in inventory},
 }

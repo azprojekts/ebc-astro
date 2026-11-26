@@ -3,6 +3,7 @@ import legacy from '../data/legacy.json';
 
 export const SITE_NAME = 'Everest Base Camp Trek Guide';
 export const GA4_ID = 'G-X2Q7PW73K2';
+export const ADSENSE_CLIENT = 'ca-pub-8784828100627586';
 export const PROD_HOST = 'everestbasecamptrekguide.com';
 
 export type Post = CollectionEntry<'posts'>;

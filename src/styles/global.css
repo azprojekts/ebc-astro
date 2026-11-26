@@ -96,3 +96,10 @@ a.card:hover { border-color: var(--ink); color: var(--ink); }
   .wrap { padding-left: 20px; padding-right: 20px; }
   .consent { left: 12px; right: 12px; bottom: 12px; max-width: none; }
 }
+
+.search-btn { width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 22px; background: var(--paper); display: inline-flex; align-items: center; justify-content: center; }
+.search-btn:hover { border-color: var(--ink); }
+
+/* Pagefind UI in site colours */
+.pagefind-ui { --pagefind-ui-scale: 0.95; --pagefind-ui-primary: #C2410C; --pagefind-ui-text: #0F2430; --pagefind-ui-background: #FFFFFF; --pagefind-ui-border: #D5DDE0; --pagefind-ui-tag: #DDF0EE; --pagefind-ui-border-width: 1px; --pagefind-ui-border-radius: 8px; --pagefind-ui-font: 'Archivo Variable', Archivo, system-ui, sans-serif; }
+.pagefind-ui mark { background: #FDE2CF; color: inherit; padding: 0 2px; border-radius: 2px; }

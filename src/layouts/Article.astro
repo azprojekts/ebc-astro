@@ -22,7 +22,7 @@ const mark = /lukla/.test(post.id) ? 'lukla' : undefined;
     </nav>
     <div style="max-width: 860px; margin-top: 28px">
       <div class="kicker">{hub.title}</div>
-      <h1 class="h-display" style="margin: 14px 0 18px; font-size: clamp(36px, 4.6vw, 54px)">{d.title}</h1>
+      <h1 class="h-display" data-pagefind-meta="title" style="margin: 14px 0 18px; font-size: clamp(36px, 4.6vw, 54px)">{d.title}</h1>
       <div class="meta" style="display: flex; flex-wrap: wrap; gap: 6px 20px">
         <span>By <a href="/author/alberts/" style="text-decoration: underline">Alberts</a></span>
         <span>Written <time datetime={d.pubDate.toISOString().slice(0, 10)}>{fmtDay(d.pubDate)}</time></span>
@@ -39,7 +39,7 @@ const mark = /lukla/.test(post.id) ? 'lukla' : undefined;
           <Image src={d.cover} alt="" widths={[720, 1440]} sizes="(min-width: 800px) 720px, 100vw" loading="eager" fetchpriority="high" style="display: block; width: 100%; height: auto; border-radius: 6px" />
         </figure>
       )}
-      <div class="prose"><Content /></div>
+      <div class="prose" data-pagefind-body><Content /></div>
 
       <div class="card" style="margin-top: 48px; padding: 24px; display: flex; gap: 18px; align-items: flex-start; font-family: var(--sans); line-height: 1.5">
         <div aria-hidden="true" style="flex: none; width: 56px; height: 56px; border-radius: 28px; background: var(--ink); color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px">A</div>

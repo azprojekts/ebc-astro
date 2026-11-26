@@ -24,7 +24,7 @@ const thumbs = others.map((p) => ({ p, first: parseGallery(p.id, p.body).shots.f
     <div style="display: flex; flex-wrap: wrap; gap: 32px 64px; align-items: flex-end; margin-top: 28px; padding-bottom: 40px; border-bottom: 1px solid var(--line)">
       <div style="flex: 999 1 560px; min-width: 0">
         <div class="kicker">{HUB_INFO[d.hub].title}</div>
-        <h1 class="h-display" style="margin: 12px 0 18px; font-size: clamp(38px, 5vw, 60px)">{d.title}</h1>
+        <h1 class="h-display" data-pagefind-meta="title" style="margin: 12px 0 18px; font-size: clamp(38px, 5vw, 60px)">{d.title}</h1>
         <div class="meta" style="display: flex; flex-wrap: wrap; gap: 6px 22px">
           <span>By <a href="/author/alberts/" style="text-decoration: underline">Alberts</a></span>
           <time datetime={d.pubDate.toISOString().slice(0, 10)}>{fmtMonth(d.pubDate)}</time>
@@ -37,7 +37,7 @@ const thumbs = others.map((p) => ({ p, first: parseGallery(p.id, p.body).shots.f
     </div>
   </div>
 
-  <main class="wrap">
+  <main class="wrap" data-pagefind-body>
     {shots.map((s, i) => {
       const wide = s.images.some((im) => im.src.width / im.src.height > 1.6);
       return (
