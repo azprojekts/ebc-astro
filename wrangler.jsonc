@@ -9,6 +9,7 @@
   // workers.dev and per-version preview URLs are off so no copy of the site is public elsewhere.
   "workers_dev": false,
   "preview_urls": false,
+  "routes": [{ "pattern": "everestbasecamptrekguide.com", "custom_domain": true }],
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
