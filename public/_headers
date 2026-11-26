@@ -8,3 +8,5 @@
   Strict-Transport-Security: max-age=31536000
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+https://ebc-astro.alberts-ziemelis.workers.dev/*
+  X-Robots-Tag: noindex
