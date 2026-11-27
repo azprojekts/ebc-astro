@@ -17,7 +17,7 @@ Statiska vietne `everestbasecamptrekguide.com`: Astro 7, izvietota uz Cloudflare
 - `src/pages/[slug].astro` — ieraksti un kategoriju arhīvi saknē (kā WordPress); `tag/[slug].astro` — birkas.
 - `src/pages/tools/` — augstuma profils, izmaksu kalkulators un aklimatizācijas plānotājs.
 - `src/lib/planner.ts` — plānotāja pieturas, pārgājieni, sākuma maršruti un tempa pārbaudes (CDC 2026, WMS 2024, NaTHNaC); plānu var dalīt ar `#plan=…` saiti.
-- `src/lib/route.ts` — maršruta augstumi; `src/lib/site.ts` — kopīgie iestatījumi (GA4 ID, centri).
+- `src/lib/route.ts` — maršruta augstumi; `src/lib/site.ts` — kopīgie iestatījumi (GA4, AdSense un Ahrefs ID, centri).
 - `public/wp-content/`, `public/img/` — oriģinālie attēli vecajos URL (saites un Google Images nesalūzt).
 - `public/_redirects`, `public/_headers` — Cloudflare pāradresācijas un galvenes.
 - `scripts/export_wp.py` — vienreizējais eksports no WordPress REST API (vēsturei).

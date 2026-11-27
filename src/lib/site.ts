@@ -5,6 +5,7 @@ export const SITE_NAME = 'Everest Base Camp Trek Guide';
 export const GA4_ID = 'G-X2Q7PW73K2';
 export const ADSENSE_CLIENT = 'ca-pub-8784828100627586';
 export const PROD_HOST = 'everestbasecamptrekguide.com';
+export const AHREFS_KEY = 'a1I3+Z9Qeae2bPfz4gk9+Q';
 
 export type Post = CollectionEntry<'posts'>;
 
