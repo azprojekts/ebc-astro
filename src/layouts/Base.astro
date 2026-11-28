@@ -6,19 +6,35 @@ import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { SITE_NAME, GA4_ID, ADSENSE_CLIENT, PROD_HOST, AHREFS_KEY, HUB_INFO } from '../lib/site';
+// Default share image for pages without their own cover: the same photo the start page already uses.
+import defaultOgSrc from '../content/posts/internet-at-everest-base-camp/everest-gorak-shep.jpg';
+const DEFAULT_OG_ALT = 'Teahouses at Gorak Shep below the Khumbu Icefall';
 
 interface Props {
   title: string;              // full <title>, 1:1 with the old site
   description?: string;
   ogType?: 'website' | 'article';
   image?: ImageMetadata;
+  imageAlt?: string;
+  published?: Date;           // article:published_time (articles only)
+  modified?: Date;            // article:modified_time, emitted only when later than published
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
   activeHub?: string;
 }
-const { title, description, ogType = 'website', image, jsonLd, noindex = false, activeHub } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const og = image ? new URL((await getImage({ src: image, width: 1200, format: 'jpg' })).src, Astro.site).href : undefined;
+const { title, description, ogType = 'website', image, imageAlt, published, modified, jsonLd, noindex = false, activeHub } = Astro.props;
+// noindex pages (404, /search/) get no canonical or og:url: a 404 must not point at /404/.
+const canonical = noindex ? undefined : new URL(Astro.url.pathname, Astro.site).href;
+// Open Graph image: 1.91:1 crop, never wider than the source. getImage() does not upscale but would still
+// report the requested size, so width and height are clamped to the source to keep the declared size true.
+const ogSrc = image ?? defaultOgSrc;
+const ogW = Math.min(1200, ogSrc.width);
+const ogH = Math.min(Math.round(ogW / 1.91), ogSrc.height);
+const ogImg = await getImage({ src: ogSrc, width: ogW, height: ogH, fit: 'cover', format: 'jpg', quality: 80 });
+const og = new URL(ogImg.src, Astro.site).href;
+const ogAlt = image ? imageAlt : DEFAULT_OG_ALT;
+const isoDate = (d: Date) => d.toISOString().slice(0, 10);
+const showModified = ogType === 'article' && published && modified && modified.getTime() > published.getTime();
 const nav = Object.entries(HUB_INFO).map(([slug, h]) => ({ href: `/${slug}/`, label: h.nav, active: slug === activeHub }));
 const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
@@ -29,15 +45,22 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 {description && <meta name="description" content={description}>}
-<link rel="canonical" href={canonical}>
+{canonical && <link rel="canonical" href={canonical}>}
 {noindex && <meta name="robots" content="noindex, follow">}
 <meta property="og:site_name" content={SITE_NAME}>
+<meta property="og:locale" content="en_US">
 <meta property="og:type" content={ogType}>
 <meta property="og:title" content={title}>
 {description && <meta property="og:description" content={description}>}
-<meta property="og:url" content={canonical}>
-{og && <meta property="og:image" content={og}>}
-<meta name="twitter:card" content={og ? 'summary_large_image' : 'summary'}>
+{canonical && <meta property="og:url" content={canonical}>}
+<meta property="og:image" content={og}>
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content={String(ogW)}>
+<meta property="og:image:height" content={String(ogH)}>
+{ogAlt && <meta property="og:image:alt" content={ogAlt}>}
+{ogType === 'article' && published && <meta property="article:published_time" content={isoDate(published)}>}
+{showModified && <meta property="article:modified_time" content={isoDate(modified!)}>}
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/rss+xml" title={SITE_NAME} href="/rss.xml">
 <meta name="theme-color" content="#F5F7F6">

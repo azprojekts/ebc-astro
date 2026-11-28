@@ -11,7 +11,7 @@ tags: []
 notice: none
 legacy:
   wpId: 187
-cover: ./Makalu-from-Everest.jpg
+cover: ./Gokyo-Lakes-from-Gokyo-Ri.jpg
 ---
 
 ## #1. View to Makalu (8,463 m) from Everest summit

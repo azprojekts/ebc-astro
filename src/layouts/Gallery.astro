@@ -16,7 +16,7 @@ const mark = /kala-patthar/.test(post.id) ? 'kalapatthar' : undefined;
 const others = (await allPosts()).filter((p) => p.data.layout === 'gallery' && p.id !== post.id);
 const thumbs = others.map((p) => ({ p, first: parseGallery(p.id, p.body).shots.find((s) => s.images.length)?.images[0] }));
 ---
-<Base title={d.title} description={d.description} ogType="article" image={d.cover} activeHub={d.hub} jsonLd={articleLd(post, Astro.site!)}>
+<Base title={d.title} description={d.description} ogType="article" image={d.cover} published={d.pubDate} modified={d.updatedDate} activeHub={d.hub} jsonLd={articleLd(post, Astro.site!)}>
   <div class="wrap" style="padding-top: 40px">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/">Home</a><span aria-hidden="true">/</span><a href={`/${d.hub}/`}>{HUB_INFO[d.hub].nav}</a><span aria-hidden="true">/</span><span>{d.title}</span>

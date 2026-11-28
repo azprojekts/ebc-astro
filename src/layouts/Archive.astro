@@ -5,7 +5,7 @@ import type { Post } from '../lib/site';
 interface Props { title: string; heading: string; kicker: string; intro?: string; posts: Post[]; activeHub?: string; description?: string }
 const { title, heading, kicker, intro, posts, activeHub, description } = Astro.props;
 ---
-<Base title={title} description={description} activeHub={activeHub}>
+<Base title={title} description={description} activeHub={activeHub} image={posts.find((p) => p.data.cover)?.data.cover}>
   <div class="wrap" style="padding-top: 40px; padding-bottom: 80px; max-width: 960px; margin-left: auto; margin-right: auto">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>{heading}</span></nav>
     <div class="kicker" style="margin-top: 28px">{kicker}</div>
