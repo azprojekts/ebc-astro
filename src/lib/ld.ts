@@ -9,7 +9,8 @@ const SITE_DESCRIPTION =
   'All about the Everest Base Camp trek in Nepal: how to prepare, altitude, routes, guides and porters, lodges, food and the flight to Lukla.';
 
 const abs = (path: string, site: URL) => new URL(path, site).href;
-const day = (d: Date) => d.toISOString().slice(0, 10);
+// Full ISO 8601 datetime with a time zone, as Google's Article checks expect (dates are UTC midnight).
+const day = (d: Date) => d.toISOString().replace(/\.\d{3}Z$/, '+00:00');
 
 export const ldIds = (site: URL) => ({
   org: abs('/#organization', site),
@@ -25,7 +26,6 @@ export function organizationNode(site: URL) {
     url: site.href,
     logo: { '@type': 'ImageObject', url: abs('/img/logo-512.png', site), width: 512, height: 512 },
     email: 'guide@everestbasecamptrekguide.com',
-    address: { '@type': 'PostalAddress', addressCountry: 'LV' },
     description: SITE_DESCRIPTION,
   };
 }

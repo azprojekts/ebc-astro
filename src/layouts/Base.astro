@@ -33,7 +33,7 @@ const ogH = Math.min(Math.round(ogW / 1.91), ogSrc.height);
 const ogImg = await getImage({ src: ogSrc, width: ogW, height: ogH, fit: 'cover', format: 'jpg', quality: 80 });
 const og = new URL(ogImg.src, Astro.site).href;
 const ogAlt = image ? imageAlt : DEFAULT_OG_ALT;
-const isoDate = (d: Date) => d.toISOString().slice(0, 10);
+const isoDate = (d: Date) => d.toISOString().replace(/\.\d{3}Z$/, '+00:00');
 const showModified = ogType === 'article' && published && modified && modified.getTime() > published.getTime();
 const nav = Object.entries(HUB_INFO).map(([slug, h]) => ({ href: `/${slug}/`, label: h.nav, active: slug === activeHub }));
 const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
