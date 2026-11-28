@@ -1,7 +1,7 @@
 // JSON-LD (schema.org) for every page type. Shared entities carry an @id and are repeated in each page's
 // @graph, so every reference resolves inside the page that uses it.
 import type { Post } from './site';
-import { SITE_NAME, HUB_INFO } from './site';
+import { SITE_NAME, HUB_INFO, AUTHOR_BIO_SHORT } from './site';
 
 const CONTEXT = 'https://schema.org';
 const LANG = 'en-US';
@@ -42,7 +42,7 @@ export function websiteNode(site: URL) {
 }
 
 export function personNode(site: URL) {
-  return { '@type': 'Person', '@id': ldIds(site).person, name: 'Alberts', url: abs('/author/alberts/', site) };
+  return { '@type': 'Person', '@id': ldIds(site).person, name: 'Alberts', url: abs('/author/alberts/', site), description: AUTHOR_BIO_SHORT };
 }
 
 function breadcrumbNode(items: { name: string; url: string }[]) {

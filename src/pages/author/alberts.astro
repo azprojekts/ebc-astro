@@ -1,9 +1,9 @@
 ---
 import Archive from '../../layouts/Archive.astro';
-import { allPosts, SITE_NAME } from '../../lib/site';
+import { allPosts, AUTHOR_BIO, SITE_NAME } from '../../lib/site';
 const posts = await allPosts();
 ---
 <Archive ldKind="profile" title={`alberts | ${SITE_NAME}`} heading="Alberts" kicker="About the author" posts={posts}
   description="Alberts writes Everest Base Camp Trek Guide from his own treks in the Khumbu, with photos from Kala Patthar, Gokyo Ri and Tengboche.">
-  <p style="margin: 0 0 32px; font-size: 20px; color: var(--muted); max-width: 680px">[Short bio: your treks in the Khumbu — years, routes, what you saw first-hand.]</p>
+  <div style="margin: 0 0 40px; max-width: 680px">{AUTHOR_BIO.map((p) => <p style="margin: 0 0 14px; font-size: 20px; line-height: 1.55; color: var(--muted)">{p}</p>)}</div>
 </Archive>

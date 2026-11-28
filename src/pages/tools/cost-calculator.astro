@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ToolCards from '../../components/ToolCards.astro';
 import { SITE_NAME } from '../../lib/site';
 // Prices checked 26 Nov 2026. Update `checked` whenever a figure changes.
 // Sources used for the figures (kept here for price updates only, not shown on the page):
@@ -22,7 +23,7 @@ const rows = [
 ---
 <Base title={`What will your EBC trek cost? | ${SITE_NAME}`} description="Calculator for the cost of the Everest Base Camp trek at late-2026 prices: permits, Lukla flights, teahouses, food, guide and porter.">
 <div class="wrap" style="padding-top: 40px; padding-bottom: 72px; font-family: var(--sans)">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Tools</span><span aria-hidden="true">/</span><span>Cost calculator</span></nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/tools/">Tools</a><span aria-hidden="true">/</span><span>Cost calculator</span></nav>
   <h1 class="h-display" style="margin: 18px 0 8px; font-size: clamp(34px, 4vw, 48px)">What will your EBC trek cost?</h1>
   <p style="margin: 0 0 28px; max-width: 720px; font-family: var(--serif); font-size: 19px; color: var(--muted)">Costs on the trail from Kathmandu and back, per person, at late-2026 prices. International flights, visa, insurance and gear are not included.</p>
 
@@ -65,6 +66,10 @@ const rows = [
     <p style="margin: 0; font-family: var(--serif); font-size: 17px; line-height: 1.6; color: var(--muted)">The figures are our own calculations. Rooms are counted per night (days minus one), food, guide and porter per day. Guide and porter rates are what you pay them; tips are extra. Prices change with season and lodge, so treat the total as a planning figure, not a quote.</p>
   </section>
 </div>
+<section class="wrap" style="padding-bottom: 80px">
+  <h2 class="h-section" style="font-size: 28px; margin: 0 0 20px">More trek tools</h2>
+  <ToolCards exclude="cost-calculator" />
+</section>
 <script>
   const root = document.querySelector<HTMLElement>('[data-calc]');
   if (root) {

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ToolCards from '../../components/ToolCards.astro';
 import { SITE_NAME } from '../../lib/site';
 import { DAYS, PLANS, LAST_CHECKED, fmt, type PlanId, type Day, type Hike } from '../../lib/route';
 
@@ -54,7 +55,7 @@ for (const p of planIds) for (const i of [8, 9]) {
   [data-plan="both"] .p-ebc, [data-plan="both"] .p-kp { display: none; }
 </style>
 <div class="wrap" style="padding-top: 40px; padding-bottom: 72px; font-family: var(--sans)">
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Tools</span><span aria-hidden="true">/</span><span>Elevation profile</span></nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/tools/">Tools</a><span aria-hidden="true">/</span><span>Elevation profile</span></nav>
   <h1 class="h-display" style="margin: 18px 0 8px; font-size: clamp(34px, 4vw, 48px)">EBC elevation profile, day by day</h1>
   <p style="margin: 0 0 28px; max-width: 720px; font-family: var(--serif); font-size: 19px; color: var(--muted)">Where you sleep each night on a classic 11-night route, how high the day hikes take you, and where the climb is faster than altitude guidelines recommend. Tap a day.</p>
 
@@ -130,6 +131,10 @@ for (const p of planIds) for (const i of [8, 9]) {
   </div>
   <p class="meta" style="margin-top: 20px; max-width: 900px">Altitudes are rounded; published figures differ by 20–100 m. Kala Patthar: GPS-measured summit 5,644 m; often listed as 5,545 m. Walking times are typical ranges from published itineraries and vary with fitness and weather. Guideline: CDC Yellow Book 2026. Last checked {LAST_CHECKED}. This is not medical advice.</p>
 </div>
+<section class="wrap" style="padding-bottom: 80px">
+  <h2 class="h-section" style="font-size: 28px; margin: 0 0 20px">More trek tools</h2>
+  <ToolCards exclude="elevation-profile" />
+</section>
 <script>
   const root = document.querySelector<HTMLElement>('[data-elev]');
   if (root) {

@@ -96,7 +96,7 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
     </a>
     <nav class="nav" aria-label="Main">
       {nav.map((n) => <a href={n.href} aria-current={n.active ? 'page' : undefined}>{n.label}</a>)}
-      <a href="/tools/elevation-profile/" style="color: var(--accent)">Tools</a>
+      <a href="/tools/" style="color: var(--accent)" aria-current={Astro.url.pathname.startsWith('/tools/') ? 'page' : undefined}>Tools</a>
     </nav>
     <a href="/search/" aria-label="Search" class="search-btn">
       <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#0F2430" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 L21 21"/></svg>
@@ -113,9 +113,10 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
       <p style="margin: 10px 0 0; line-height: 1.6; max-width: 340px">Independent notes on the Everest Base Camp trek, since 2010.</p>
     </div>
     <nav aria-label="Footer">
-      <a href="/everest-base-camp-trek/">Start here</a><a href="/author/alberts/">About</a>
-      <a href="/altitude-sickness/">Altitude</a><a href="/privacy/">Privacy</a>
-      <a href="/tools/elevation-profile/">Tools</a><button type="button" data-consent-open>Cookie settings</button>
+      {nav.map((n) => <a href={n.href}>{n.label}</a>)}
+      <a href="/articles/">All articles</a><a href="/tools/">Tools</a>
+      <a href="/author/alberts/">About</a><a href="/privacy/">Privacy</a>
+      <button type="button" data-consent-open>Cookie settings</button>
     </nav>
   </div>
   <div class="bottom"><div class="wrap num">© 2010–{new Date().getFullYear()} Everest Base Camp Trek Guide</div></div>

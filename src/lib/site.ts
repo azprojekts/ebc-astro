@@ -9,6 +9,13 @@ export const AHREFS_KEY = 'a1I3+Z9Qeae2bPfz4gk9+Q';
 
 export type Post = CollectionEntry<'posts'>;
 
+// Author bio (Alberts, 2026-11-28): long version on /author/alberts/, short one in the box under each article.
+export const AUTHOR_BIO = [
+  'I have been to Nepal three times: once in 2006 and twice in 2007. One trip took me to the valley between Annapurna and Dhaulagiri, and twice I walked up the Khumbu valley. On my third trip I walked a fantastic route: from Lukla up to Gokyo Ri, over the Cho La pass into the Khumbu, up Kala Patthar and back down to Lukla.',
+  'I saw Nepal through the viewfinder of a Hasselblad 500C/M, and many of the photos on this site were taken with it.',
+];
+export const AUTHOR_BIO_SHORT = 'Three trips to Nepal in 2006 and 2007, twice through the Khumbu. Many of the photos here were taken with a Hasselblad 500C/M.';
+
 export const HUB_INFO: Record<string, { nav: string; title: string; blurb: string; description: string }> = {
   'everest-base-camp-trek': { nav: 'Start here', title: 'Start here: the EBC trek', blurb: 'Route, days and where you sleep, on one page.', description: 'Start here for the Everest Base Camp trek: Lukla, acclimatization, lodges, food, water and internet, from first-hand notes on the trail.' },
   'trekking-basics': { nav: 'Planning', title: 'Lodges, Lukla & logistics', blurb: 'Teahouses, the Lukla flight, seasons, internet.', description: 'Trekking basics for Nepal: when to go, how long to trek, lodges and camping, organized or independent treks, and the flight to Lukla.' },
@@ -50,6 +57,13 @@ export function postMeta(p: Post): string {
   return p.data.layout === 'gallery'
     ? `${fmtMonth(p.data.pubDate)}, ${imageCount(p.body)} photos`
     : `${fmtMonth(p.data.pubDate)}, ${readingMinutes(p.body)} min read`;
+}
+
+/** Summary shown in post lists: the meta description without its leading "Topic: " part. */
+export function postExcerpt(p: Post): string {
+  const d = p.data.description;
+  const i = d.indexOf(': ');
+  return i > 0 && i < 70 ? d.charAt(i + 2).toUpperCase() + d.slice(i + 3) : d;
 }
 
 /** Meta description for category/tag archives: unique per page, built from the posts it lists. */

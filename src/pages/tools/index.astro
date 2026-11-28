@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import ToolCards from '../../components/ToolCards.astro';
+import { SITE_NAME } from '../../lib/site';
+---
+<Base title={`Trek tools | ${SITE_NAME}`} description="Interactive tools for the Everest Base Camp trek: a day-by-day elevation profile, a trek cost calculator and an acclimatization planner.">
+  <div class="wrap" style="padding-top: 40px; padding-bottom: 80px">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Tools</span></nav>
+    <div class="kicker" style="margin-top: 28px; color: var(--accent-dark)">Trek tools</div>
+    <h1 class="h-display" style="margin: 12px 0 14px; font-size: clamp(36px, 4.6vw, 54px)">Plan your trek with real numbers</h1>
+    <p style="margin: 0 0 32px; font-size: 20px; color: var(--muted); max-width: 680px">Interactive charts and calculators. Every figure shows the date it was last checked.</p>
+    <ToolCards />
+  </div>
+</Base>
