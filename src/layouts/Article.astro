@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import { render } from 'astro:content';
+import { getImage } from 'astro:assets';
 import Base from './Base.astro';
 import Notice from '../components/Notice.astro';
 import ElevationMini from '../components/ElevationMini.astro';
@@ -10,12 +11,13 @@ import { articleLd } from '../lib/ld';
 interface Props { post: Post; prev?: Post; next?: Post; related: Post[] }
 const { post, prev, next, related } = Astro.props;
 const d = post.data;
+const coverUrl = d.cover ? new URL((await getImage({ src: d.cover, width: Math.min(1200, d.cover.width), format: 'jpg', quality: 80 })).src, Astro.site).href : undefined;
 const { Content, headings } = await render(post);
 const toc = headings.filter((h) => h.depth === 2);
 const hub = HUB_INFO[d.hub];
 const mark = /lukla/.test(post.id) ? 'lukla' : undefined;
 ---
-<Base title={d.title} description={d.description} ogType="article" image={d.cover} published={d.pubDate} modified={d.updatedDate} activeHub={d.hub} jsonLd={articleLd(post, Astro.site!)}>
+<Base title={d.title} description={d.description} ogType="article" image={d.cover} published={d.pubDate} modified={d.updatedDate} activeHub={d.hub} jsonLd={articleLd(post, Astro.site!, coverUrl)}>
   <div class="wrap" style="padding-top: 40px">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="/">Home</a><span aria-hidden="true">/</span><a href={`/${d.hub}/`}>{hub.nav}</a><span aria-hidden="true">/</span><span>{d.title}</span>

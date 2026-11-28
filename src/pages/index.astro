@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
+import { homeLd } from '../lib/ld';
 import PostRows from '../components/PostRows.astro';
 import { allPosts, inCategory, HUB_INFO, SITE_NAME } from '../lib/site';
 import { DAYS, PEAKS, LAST_CHECKED } from '../lib/route';
@@ -29,9 +30,8 @@ const labels = [
   { i: 0, t: 'Lukla', dy: -16 }, { i: 1, t: 'Phakding', dy: -15 }, { i: 2, t: 'Namche', dy: -15 },
   { i: 4, t: 'Tengboche', dy: -15 }, { i: 5, t: 'Dingboche', dy: -15 }, { i: 7, t: 'Lobuche', dy: -15 },
 ];
-const website = { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE_NAME, url: 'https://everestbasecamptrekguide.com/' };
 ---
-<Base title={SITE_NAME} description="All about the Everest Base Camp trek in Nepal: how to prepare, altitude, routes, guides and porters, lodges, food and the flight to Lukla." jsonLd={website} image={gorakShep} imageAlt="Teahouses at Gorak Shep below the Khumbu Icefall">
+<Base title={SITE_NAME} description="All about the Everest Base Camp trek in Nepal: how to prepare, altitude, routes, guides and porters, lodges, food and the flight to Lukla." jsonLd={homeLd(Astro.site!)} image={gorakShep} imageAlt="Teahouses at Gorak Shep below the Khumbu Icefall">
 
 <section class="wrap" style="padding-top: 72px; padding-bottom: 56px; display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
   <div style="flex: 1 1 460px; min-width: 0">

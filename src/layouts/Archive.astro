@@ -2,10 +2,12 @@
 import Base from './Base.astro';
 import PostRows from '../components/PostRows.astro';
 import type { Post } from '../lib/site';
-interface Props { title: string; heading: string; kicker: string; intro?: string; posts: Post[]; activeHub?: string; description?: string }
-const { title, heading, kicker, intro, posts, activeHub, description } = Astro.props;
+import { collectionLd, profileLd } from '../lib/ld';
+interface Props { title: string; heading: string; kicker: string; intro?: string; posts: Post[]; activeHub?: string; description?: string; ldKind?: 'collection' | 'profile' }
+const { title, heading, kicker, intro, posts, activeHub, description, ldKind = 'collection' } = Astro.props;
+const jsonLd = ldKind === 'profile' ? profileLd(Astro.site!, description) : collectionLd(Astro.site!, Astro.url.pathname, heading, description, posts);
 ---
-<Base title={title} description={description} activeHub={activeHub} image={posts.find((p) => p.data.cover)?.data.cover}>
+<Base title={title} description={description} activeHub={activeHub} jsonLd={jsonLd} image={posts.find((p) => p.data.cover)?.data.cover}>
   <div class="wrap" style="padding-top: 40px; padding-bottom: 80px; max-width: 960px; margin-left: auto; margin-right: auto">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>{heading}</span></nav>
     <div class="kicker" style="margin-top: 28px">{kicker}</div>

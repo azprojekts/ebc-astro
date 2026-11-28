@@ -64,7 +64,7 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="alternate" type="application/rss+xml" title={SITE_NAME} href="/rss.xml">
 <meta name="theme-color" content="#F5F7F6">
-{ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+{ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj).replace(/</g, '\\u003c')} />)}
 <!-- Google tag + AdSense, production domain only. Consent Mode v2: denied by default in the EEA/UK/CH until
      Google's certified CMP (AdSense › Privacy & messaging › European regulations) records the visitor's choice. -->
 <script is:inline define:vars={{ GA4_ID, ADSENSE_CLIENT, PROD_HOST }}>

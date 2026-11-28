@@ -2,10 +2,8 @@
 import Archive from '../../layouts/Archive.astro';
 import { allPosts, SITE_NAME } from '../../lib/site';
 const posts = await allPosts();
-const person = { '@context': 'https://schema.org', '@type': 'Person', name: 'Alberts', url: 'https://everestbasecamptrekguide.com/author/alberts/' };
 ---
-<Archive title={`alberts | ${SITE_NAME}`} heading="Alberts" kicker="About the author" posts={posts}
+<Archive ldKind="profile" title={`alberts | ${SITE_NAME}`} heading="Alberts" kicker="About the author" posts={posts}
   description="Alberts writes Everest Base Camp Trek Guide from his own treks in the Khumbu, with photos from Kala Patthar, Gokyo Ri and Tengboche.">
   <p style="margin: 0 0 32px; font-size: 20px; color: var(--muted); max-width: 680px">[Short bio: your treks in the Khumbu — years, routes, what you saw first-hand.]</p>
-  <script type="application/ld+json" set:html={JSON.stringify(person)} />
 </Archive>
