@@ -15,6 +15,15 @@ const { intro, shots, closing } = parseGallery(post.id, post.body);
 const n = imageCount(post.body);
 const camera = closing.some((c) => /Hasselblad/.test(c)) ? 'Hasselblad 500C/M' : undefined;
 const mark = /kala-patthar/.test(post.id) ? 'kalapatthar' : undefined;
+// Responsive variants: wide panoramas up to 2400 px (a 5000 px original was one 1.2 MB file), normal shots at
+// 620 px and 2x, never wider than the source.
+const WIDE_SIZES = '(min-width: 1240px) 1176px, calc(100vw - 64px)';
+function galleryWidths(src: number, wide: boolean): number[] {
+  const steps = wide ? [960, 1440, 1920, 2400] : [620, 1240];
+  const ws = steps.filter((w) => w < src);
+  ws.push(Math.min(src, steps[steps.length - 1]));
+  return [...new Set(ws)];
+}
 const others = (await allPosts()).filter((p) => p.data.layout === 'gallery' && p.id !== post.id);
 const thumbs = others.map((p) => ({ p, first: parseGallery(p.id, p.body).shots.find((s) => s.images.length)?.images[0] }));
 ---
@@ -46,7 +55,8 @@ const thumbs = others.map((p) => ({ p, first: parseGallery(p.id, p.body).shots.f
         <section style={`display: flex; flex-direction: ${i % 2 && !wide ? 'row-reverse' : 'row'}; flex-wrap: wrap; gap: 32px 56px; align-items: center; padding: 48px 0; border-bottom: 1px solid var(--line)`}>
           <div style={wide ? 'flex: 1 1 100%; min-width: 0' : 'flex: 1 1 480px; max-width: 620px; min-width: 0'}>
             {s.images.map((im) => {
-              const img = <Image src={im.src} alt={im.alt} widths={[im.src.width]} sizes={wide ? '100vw' : '(min-width: 700px) 620px, 100vw'} style="display: block; width: 100%; height: auto; border-radius: 4px; margin-bottom: 8px" />;
+              const ws = galleryWidths(im.src.width, wide);
+              const img = <Image src={im.src} alt={im.alt} width={Math.max(...ws)} widths={ws} quality={wide ? 72 : undefined} sizes={wide ? WIDE_SIZES : '(min-width: 700px) 620px, 100vw'} style="display: block; width: 100%; height: auto; border-radius: 4px; margin-bottom: 8px" />;
               return im.full ? <a href={im.full}>{img}</a> : img;
             })}
           </div>

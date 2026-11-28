@@ -50,8 +50,14 @@ def fetch(url):
             raise SystemExit(f'download failed: {url}')
     return path, dest
 
+# Legacy files re-encoded after the migration; mirror() must not overwrite them with the originals.
+# 2026-11-28: 5000 px 2.9 MB panorama -> 3600 px q70 565 KB (Ahrefs "Image file size too large").
+KEEP_REENCODED = {'/wp-content/uploads/2010/11/Everest-Khumbu-Icefall-Panorama-1.jpg'}
+
 def mirror(path, src):
     """Keep legacy URL alive: copy original to public/<path>."""
+    if path in KEEP_REENCODED and (PUBLIC / path.lstrip('/')).exists():
+        return
     dst = PUBLIC / path.lstrip('/')
     dst.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(src, dst)
